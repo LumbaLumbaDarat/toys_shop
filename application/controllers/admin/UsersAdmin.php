@@ -21,8 +21,8 @@ class UsersAdmin extends CI_Controller {
 			$newUsersAdminModel->user_role = $newUserRoleModel->role_name;
 			$newUsersAdminModel->created_date = $usersAdmin->created_date;
 			$newUsersAdminModel->created_by = $usersAdmin->created_by;
-			$newUsersAdminModel->updated_date = $this->checkParamIsEmpty($usersAdmin->updated_date);
-			$newUsersAdminModel->updated_by = $this->checkParamIsEmpty($usersAdmin->updated_by);
+			$newUsersAdminModel->updated_date = $this->utilityModel->checkParamIsEmpty($usersAdmin->updated_date);
+			$newUsersAdminModel->updated_by = $this->utilityModel->checkParamIsEmpty($usersAdmin->updated_by);
 
 			array_push($usersAdminModelArray, $newUsersAdminModel);
 		}
@@ -109,7 +109,7 @@ class UsersAdmin extends CI_Controller {
 		}
 
 		$this->session->set_flashdata('message', $message);
-		return redirect('admin/usersadmin', 'refresh');
+		return redirect('admin/usersadmin');
 	}
 
 	public function update()
@@ -181,18 +181,5 @@ class UsersAdmin extends CI_Controller {
 
 		$this->session->set_flashdata('message', $message);
 		return redirect('admin/usersadmin');
-	}
-
-	///METHOD UTILITASI
-	private function checkParamIsEmpty($data)
-	{
-		if(empty($data) || $data == null || $data == '')
-			return $data = "Tidak Ada";
-		else return $data;
-	}
-
-	private function notificationMessage()
-	{
-		return '<div class="alert alert-success alert-dismissible " role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>Test Aja</div>';
 	}
 }

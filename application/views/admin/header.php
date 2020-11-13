@@ -97,6 +97,12 @@
                     </ul>
                   </li>
                   <li><a href="<?php echo base_url('admin/usersadmin/') ?>"><i class="fa fa-users"></i> Client</a></li>
+                  <li><a><i class="fa fa-tag"></i> Kategori Mainan<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="<?php echo base_url('admin/toyscategory/') ?>">Data Kategori</a></li>
+                      <li><a href="<?php echo base_url('admin/toyscategory/form') ?>">Tambah Kategori</a></li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
               <div class="menu_section">
