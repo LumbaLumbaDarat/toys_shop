@@ -28,18 +28,19 @@
           <div class="col-middle">
             <div class="text-center">
               <h1 class="error-number">400</h1>
-              <h2>Request tambah Data Gagal</h2>
-			  <?php 
-					  $errorCode = array('Error Number: 1062');
-					  foreach($errorCode as $errCd)
-					  {
-							if(strpos($message, $errCd))
-								echo '<p><h2>Kami menemukan Duplikat Data Email pada Sistem, Alamat Email yang Anda masukkan sudah Terdaftar !</h2></p>';
-							else echo $message;
-					  }
+              <h2>Error System Database</h2>
+        <?php 
+            echo $message;
+					  // $errorCode = array('Error Number: 1062');
+					  // foreach($errorCode as $errCd)
+					  // {
+						// 	if(strpos($message, $errCd))
+						// 		echo '<p><h2>Kami menemukan Duplikat Data pada Sistem!</h2></p>';
+						// 	else echo $message;
+					  // }
 			  ?>
               <div class="mid_center">
-
+                <h2><a href="<?php echo base_url('admin/dashboard/') ?>">Back to Dashboard</a><h2>
               </div>
             </div>
           </div>

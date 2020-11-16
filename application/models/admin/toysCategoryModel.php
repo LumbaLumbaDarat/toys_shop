@@ -4,11 +4,7 @@ class ToysCategoryModel extends CI_model{
 
 	private $tableToysCategory = "toys_category";
 
-	public function countData()
-	{
-		return $this->db->count_all_results($this->tableToysCategory);
-	}
-
+	//CRUD OPERATION
 	public function getData()
 	{
 		return $this->db->get($this->tableToysCategory);
@@ -34,6 +30,12 @@ class ToysCategoryModel extends CI_model{
 	{
 		$this->db->where(array('id' => $id));
 		$this->db->delete($this->tableToysCategory);
+	}
+
+	//COUNT AND REPORT OPERATION
+	public function simpleReport($typeReport)
+	{
+		return $this->utilityModel->getSimpleReportInDashboard($typeReport, $this->tableToysCategory);
 	}
 }
 ?>

@@ -15,14 +15,15 @@ class UsersAdmin extends CI_Controller {
 			$newUsersAdminModel->id = $usersAdmin->id;
 			$newUsersAdminModel->name = $usersAdmin->name;
 			$newUsersAdminModel->email = $usersAdmin->email;
+			$newUsersAdminModel->user_role_code = $usersAdmin->user_role;
 
 			$newUserRoleModel = $this->usersRoleModel->getDataWhere($usersAdmin->user_role);
 
 			$newUsersAdminModel->user_role = $newUserRoleModel->role_name;
-			$newUsersAdminModel->created_date = $usersAdmin->created_date;
+			$newUsersAdminModel->created_date = $this->utilityModel->converterMonthNameForDateTime($usersAdmin->created_date);
 			$newUsersAdminModel->created_by = $usersAdmin->created_by;
-			$newUsersAdminModel->updated_date = $this->utilityModel->checkParamIsEmpty($usersAdmin->updated_date);
-			$newUsersAdminModel->updated_by = $this->utilityModel->checkParamIsEmpty($usersAdmin->updated_by);
+			$newUsersAdminModel->updated_date = $this->utilityModel->checkParamIsEmpty('DATETIME', $usersAdmin->updated_date);
+			$newUsersAdminModel->updated_by = $this->utilityModel->checkParamIsEmpty('STRING', $usersAdmin->updated_by);
 
 			array_push($usersAdminModelArray, $newUsersAdminModel);
 		}
@@ -78,8 +79,8 @@ class UsersAdmin extends CI_Controller {
 			'user_role'    => $usersRole,
 			'name' 		   => $name,
 			'email' 	   => $email,
-			'password'     => '12345',
-			'created_date' => date('Y-m-d h:i:s'),
+			'password'     => $this->utilityModel->setDefaultPasswordUserAdmin(),
+			'created_date' => $this->utilityModel->sysDate(),
 			'created_by'   => 'Admin'
 			);
 
@@ -145,14 +146,14 @@ class UsersAdmin extends CI_Controller {
 					'user_role'    => $usersRole,
 					'name'         => $name,
 					'photo_profile'=> $this->upload->data('file_name'),
-					'updated_date' => date('Y-m-d h:i:s'),
+					'updated_date' => $this->utilityModel->sysDate(),
 					'updated_by'   => 'Admin'
 					);
 			}
 		}else $data = array(
 					'user_role'    => $usersRole,
 					'name'         => $name,
-					'updated_date' => date('Y-m-d h:i:s'),
+					'updated_date' => $this->utilityModel->sysDate(),
 					'updated_by'   => 'Admin'
 					);
 

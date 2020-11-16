@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url', 'date');
+$autoload['helper'] = array('url', 'date', 'form');
 
 /*
 | -------------------------------------------------------------------
@@ -136,4 +136,5 @@ $autoload['model'] = array(
     'utility_models/utilityModel', 
     'admin/usersAdminModel', 
     'admin/usersRoleModel', 
-    'admin/toysCategoryModel');
+    'admin/toysCategoryModel',
+    'admin/toysModel');

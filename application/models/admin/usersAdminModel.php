@@ -4,11 +4,7 @@ class UsersAdminModel extends CI_model{
 
 	private $tabelUsersAdmin = "user_admin";
 
-	public function countData()
-	{
-		return $this->db->count_all_results($this->tabelUsersAdmin);
-	}
-
+	//CRUD OPERATION
 	public function getData()
 	{
 		return $this->db->get($this->tabelUsersAdmin);
@@ -34,6 +30,12 @@ class UsersAdminModel extends CI_model{
 	{
 		$this->db->where(array('id' => $id));
 		$this->db->delete($this->tabelUsersAdmin);
+	}
+
+	//COUNT AND REPORT OPERATION
+	public function simpleReport($typeReport)
+	{
+		return $this->utilityModel->getSimpleReportInDashboard($typeReport, $this->tabelUsersAdmin);
 	}
 }
 ?>

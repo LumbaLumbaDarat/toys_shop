@@ -15,6 +15,9 @@
             else echo "Toko Mainan | Admin Dashboard"?>
     </title>
 
+    <!-- jQuery -->
+    <script src="<?php echo base_url('assets/admin_template/vendors/jquery/dist/jquery.min.js') ?>"></script>
+
     <!-- Bootstrap -->
     <link href="<?php echo base_url('assets/admin_template/vendors/bootstrap/dist/css/bootstrap.min.css') ?>" rel="stylesheet">
     <!-- Font Awesome -->
@@ -66,7 +69,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-gift"></i> <span>Toko Mainan</span></a>
+              <a href="<?php echo base_url('admin/dashboard/') ?>" class="site_title"><i class="fa fa-gift"></i> <span>Toko Mainan</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -88,7 +91,7 @@
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>General</h3>
+                <h3>Pemeliharaan User</h3>
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-users"></i> User Admin<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -97,20 +100,38 @@
                     </ul>
                   </li>
                   <li><a href="<?php echo base_url('admin/usersadmin/') ?>"><i class="fa fa-users"></i> Client</a></li>
+                </ul>
+              </div>
+              <div class="menu_section">
+                <h3>Pemeliharaan Produk</h3>
+                <ul class="nav side-menu">
                   <li><a><i class="fa fa-tag"></i> Kategori Mainan<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="<?php echo base_url('admin/toyscategory/') ?>">Data Kategori</a></li>
                       <li><a href="<?php echo base_url('admin/toyscategory/form') ?>">Tambah Kategori</a></li>
                     </ul>
                   </li>
+                  <li><a><i class="fa fa-gift"></i> Mainan<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="<?php echo base_url('admin/toys/') ?>">Data Mainan</a></li>
+                      <li><a href="<?php echo base_url('admin/toys/form') ?>">Tambah Mainan</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="menu_section">
+                <h3>Pemeliharaan Transaksi</h3>
+                <ul class="nav side-menu">
+                  <li><a href="#"><i class="fa fa-shopping-cart"></i> Keranjang Belanja </a></li>
+                  <li><a href="#"><i class="fa fa-credit-card"></i> Sejarah Transaksi </a></li>             
                 </ul>
               </div>
               <div class="menu_section">
                 <h3>Pengaturan</h3>
                 <ul class="nav side-menu">
-                  <li><a href="<?php echo base_url('admin/usersadmin/') ?>"><i class="fa fa-leaf"></i> Profile </a></li>
-                  <li><a href="<?php echo base_url('admin/usersadmin/') ?>"><i class="fa fa-key"></i> Ubah Password </a></li>
-                  <li><a href="<?php echo base_url('admin/usersadmin/') ?>"><i class="fa fa-sign-out"></i> Log out </a></li>                
+                  <li><a href="#"><i class="fa fa-leaf"></i> Profile </a></li>
+                  <li><a href="#"><i class="fa fa-key"></i> Ubah Password </a></li>
+                  <li><a href="#"><i class="fa fa-sign-out"></i> Log out </a></li>                
                 </ul>
               </div>
 

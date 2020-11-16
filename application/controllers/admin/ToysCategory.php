@@ -15,10 +15,10 @@ class ToysCategory extends CI_Controller {
             $newToysCategoryModel->id = $toysCategory->id;
             $newToysCategoryModel->cat_name = $toysCategory->cat_name;
             $newToysCategoryModel->cat_desc = $toysCategory->cat_desc;
-            $newToysCategoryModel->created_date = $toysCategory->created_date;
+            $newToysCategoryModel->created_date = $this->utilityModel->converterMonthNameForDateTime($toysCategory->created_date);
             $newToysCategoryModel->created_by = $toysCategory->created_by;
-            $newToysCategoryModel->updated_date = $this->utilityModel->checkParamIsEmpty($toysCategory->updated_date);
-            $newToysCategoryModel->updated_by = $this->utilityModel->checkParamIsEmpty($toysCategory->updated_by);
+            $newToysCategoryModel->updated_date = $this->utilityModel->checkParamIsEmpty('DATETIME', $toysCategory->updated_date);
+            $newToysCategoryModel->updated_by = $this->utilityModel->checkParamIsEmpty('STRING', $toysCategory->updated_by);
 
             array_push($toysCategoryModelArray, $newToysCategoryModel);
         }
@@ -66,7 +66,7 @@ class ToysCategory extends CI_Controller {
 		$data = array(
 			'cat_name'     => $catName,
 			'cat_desc' 	   => $catDesc,
-			'created_date' => date('Y-m-d h:i:s'),
+			'created_date' => $this->utilityModel->sysDate(),
 			'created_by'   => 'Admin'
 			);
 
@@ -87,8 +87,9 @@ class ToysCategory extends CI_Controller {
 		$catDesc = $this->input->post('cat_desc');
 		
 		$data = array(
+			'cat_name'     => $catName,
 			'cat_desc'     => $catDesc,
-			'updated_date' => date('Y-m-d h:i:s'),
+			'updated_date' => $this->utilityModel->sysDate(),
 			'updated_by'   => 'Admin'
 			);
 

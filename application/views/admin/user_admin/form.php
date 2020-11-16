@@ -33,7 +33,7 @@
                             <div class="profile_img">
                                 <div id="crop-avatar">
                                     <!-- Current avatar -->
-                                    <img class="img-thumbnail avatar-view" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Change the avatar">
+                                    <img class="img-thumbnail avatar-view edit-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Sesuaikan Foto User Admin">
                                 </div>
                             </div>
                         </div>
@@ -45,27 +45,30 @@
                                 <div class="field item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3  label-align">Name<span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6">
-                                        <input class="form-control" data-validate-length-range="6" data-validate-words="2" name="name" required="required" value="<?php echo $usersAdminModel->name ?>"/>
+                                        <input class="form-control" data-validate-length-range="6" data-validate-words="2" id="name" name="name" required="required" value="<?php echo $usersAdminModel->name ?>"/>
                                     </div>
                                 </div>
                                 <div class="field item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3  label-align">email<span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6">
-                                        <input class="form-control" name="email" class='email' required="required" type="email" value="<?php echo $usersAdminModel->email ?>" <?php if(!empty($usersAdminModel->email)) echo 'readonly="readonly"'; ?>/></div>
+                                        <input class="form-control" id="email" name="email" class='email' required="required" type="email" value="<?php echo $usersAdminModel->email ?>" <?php if(!empty($usersAdminModel->email)) echo 'readonly="readonly"'; ?>/></div>
                                 </div>
                                 <div class="field item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3  label-align">Confirm email address<span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6">
-                                        <input class="form-control" type="email" class='email' name="confirm_email" data-validate-linked='email' required='required' /></div>
+                                        <input class="form-control" type="email" class='email' id="confirm_email" name="confirm_email" data-validate-linked='email' required='required' /></div>
                                 </div>
                                 <div class="field item form-group">
                                     <label class="control-label col-md-3 col-sm-3 label-align">Select<span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 ">
-                                        <select class="form-control" class='user_role' name="user_role" required>
+                                        <select class="form-control" class='user_role' id="user_role" name="user_role" required>
                                             <?php 
+                                                $oldUserAdminRole;
                                                 $userAdminRole = $usersAdminModel->user_role;
                                                 if($usersRoleModel){
-                                                foreach($usersRoleModel as $usersRole) { ?>
+                                                foreach($usersRoleModel as $usersRole) { 
+                                                    if(!empty($userAdminRole) && $usersRole->role_code == $userAdminRole)
+                                                        $oldUserAdminRole = $usersRole->role_code.' | '.$usersRole->role_name; ?>
                                                 <option <?php if(!empty($userAdminRole) && $usersRole->role_code == $userAdminRole) echo 'selected="selected"'; ?>><?php echo $usersRole->role_code.' | '.$usersRole->role_name; ?></option>    
                                             <?php }} ?>
                                         </select>
@@ -84,8 +87,89 @@
                                 <div class="ln_solid">
                                     <div class="form-group">
                                         <div class="col-md-6 offset-md-3">
-                                            <button type='submit' class="btn btn-primary">Submit</button>
                                             <button type='reset' class="btn btn-success">Reset</button>
+                                            <button type="submit" class="btn btn-primary" <?php if(!empty($usersAdminModel->id)) echo 'hidden'; ?>>Submit</button>
+                                            <button type='button' class="btn btn-primary" onclick="setNewParamForUpdate()" <?php if(empty($usersAdminModel->id)) echo 'hidden'; ?>>Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade bs-example-modal-lg" id="updateModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-edit"></i> Ubah User Admin</h4>
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p><strong>Mohon cek kembali sebelum Anda melakukan perubahan Data.</strong> Apakah Anda yakin ingin melakukan perubahan Data User Admin ini ?</p>
+                                                <div class="col-md-6">
+                                                    <div class="x_panel">
+                                                        <div class="x_title">
+                                                            <h2>Data Lama <small>sub title</small></h2>
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                                </li>
+                                                                <li class="dropdown">
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#">Settings 1</a>
+                                                                        <a class="dropdown-item" href="#">Settings 2</a>
+                                                                    </div>
+                                                                </li>
+                                                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="x_content">
+                                                            <label for="old_name">Nama</label>
+                                                            <input type="text" id="old_name" class="form-control" name="old_name" value="<?php echo $usersAdminModel->name ?>" readonly="readonly"/>
+                                                            <label for="old_email">Email</label>
+                                                            <input type="text" id="old_email" class="form-control" name="old_email" value="<?php echo $usersAdminModel->email ?>" readonly="readonly"/>
+                                                            <label for="old_user_role">User Role</label>
+                                                            <input type="text" id="old_user_role" class="form-control" name="old_user_role" value="<?php echo $oldUserAdminRole ?>" readonly="readonly"/>
+                                                            <label for="old_user_role">Photo Profile</label>
+                                                            <img class="img-thumbnail avatar-view old-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Foto User Admin Lama">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="x_panel">
+                                                        <div class="x_title">
+                                                            <h2>Data Baru <small>sub title</small></h2>
+                                                            <ul class="nav navbar-right panel_toolbox">
+                                                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                                </li>
+                                                                <li class="dropdown">
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                        <a class="dropdown-item" href="#">Settings 1</a>
+                                                                        <a class="dropdown-item" href="#">Settings 2</a>
+                                                                    </div>
+                                                                </li>
+                                                                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="x_content">
+                                                            <label for="new_name">Nama</label>
+                                                            <input type="text" id="new_name" class="form-control" name="new_name" readonly="readonly"/>
+                                                            <label for="new_email">Email</label>
+                                                            <input type="text" id="new_email" class="form-control" name="new_email" readonly="readonly"/>
+                                                            <label for="new_user_role">User Role</label>
+                                                            <input type="text" id="new_user_role" class="form-control" name="new_user_role" readonly="readonly"/>
+                                                            <label for="new_photo_profile">Photo Profile</label>
+                                                            <img class="img-thumbnail avatar-view new-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Foto User Admin Baru">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-warning">Ubah</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +191,8 @@
     function previewImg()
     {
         const foto = document.querySelector('#photo_profile');
-        const imgPreview = document.querySelector('.avatar-view');
+        const imgPreview = document.querySelector('.edit-avatar');
+        const newImgPreview = document.querySelector('.new-avatar');
 
         const fileFoto = new FileReader();
         fileFoto.readAsDataURL(foto.files[0]);
@@ -115,8 +200,53 @@
         fileFoto.onload = function(e)
         {
             imgPreview.src = e.target.result;
+            newImgPreview.src = e.target.result;
         }
     }
+</script>
+
+<script>
+    function setNewParamForUpdate()
+    {
+        if(!document.getElementById("name").value == null || 
+            !document.getElementById("name").value == "")
+        {
+            if(!document.getElementById("confirm_email").value == null || 
+            !document.getElementById("confirm_email").value == "")
+            {
+                if(document.getElementById("email").value == 
+                    document.getElementById("confirm_email").value)
+                    {
+                        document.getElementById("new_name").value = document.getElementById("name").value;
+                        document.getElementById("new_email").value = document.getElementById("email").value;
+                        document.getElementById("new_user_role").value = document.getElementById("user_role").value;
+
+                        $('#updateModal').modal('show'); 
+                    }else{
+                        errorNotification("Email", "Email dan Konfirmasi Email Tidak Valid !");
+                        return false;
+                    }
+            }else{
+                errorNotification("Konfirmasi Email", "Konfirmasi Email Tidak Valid !");
+                return false;
+            }
+        }else{
+            errorNotification("Nama User Admin", "Nama User Admin Tidak Valid !");
+            return false;
+        }
+    }
+
+    function errorNotification(errorTitle, errorMessage)
+    {
+        new PNotify({
+            title: errorTitle,
+            text: errorMessage,
+            type: 'error',
+            hide: true,
+            delay: 1000,
+            styling: 'bootstrap3'
+        });
+}
 </script>
 
 <!-- Javascript functions	-->

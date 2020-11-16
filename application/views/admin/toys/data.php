@@ -60,7 +60,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>Kategori</th>
+                                                        <th>Nama Mainan</th>
+                                                        <th>Jumlah</th>
+                                                        <th>Harga Satuan (IDR)</th>
+                                                        <th>Kategori Mainan</th>
                                                         <th>Tanggal dibuat</th>
                                                         <th>Dibuat oleh</th>
                                                         <th>Tanggal diubah</th>
@@ -70,16 +73,19 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php 
-                                                    if($toysCategoryModel){
+                                                    if($toysModel){
                                                         $id = 1;
-                                                    foreach($toysCategoryModel as $categoryModel) { ?>
+                                                    foreach($toysModel as $toys) { ?>
                                                         <tr>
                                                             <td><?php echo $id++ ?></td>
-                                                            <td><?php echo $categoryModel->cat_name; ?></td>
-                                                            <td><?php echo $categoryModel->created_date; ?></td>
-                                                            <td><?php echo $categoryModel->created_by; ?></td>
-                                                            <td><?php echo $categoryModel->updated_date; ?></td>
-                                                            <td><?php echo $categoryModel->updated_by; ?></td>
+                                                            <td><?php echo $toys->toy_name; ?></td>
+                                                            <td><?php echo $toys->toy_quantity; ?></td>
+                                                            <td><?php echo $toys->toy_price_string; ?></td>
+                                                            <td><?php echo $toys->cat_name; ?></td>
+                                                            <td><?php echo $toys->created_date; ?></td>
+                                                            <td><?php echo $toys->created_by; ?></td>
+                                                            <td><?php echo $toys->updated_date; ?></td>
+                                                            <td><?php echo $toys->updated_by; ?></td>
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
@@ -87,24 +93,48 @@
                                                                     Aksi
                                                                     </button>
                                                                     <div class="dropdown-menu">
-                                                                        <form role="form" action="<?php echo base_url('dashboard/toyscategory/detail')?>" method="post">
-                                                                            <input type="hidden" name="id_detail" value="<?php echo $categoryModel->id; ?>">
+                                                                        <form role="form" action="<?php echo base_url('admin/toys/detail')?>" method="post">
+                                                                            <input type="hidden" name="id_detail" value="<?php echo $toys->id; ?>">
                                                                             <button type="submit" class="dropdown-item btn-primary">
                                                                                 <i class="fa fa-search"></i> Lihat Detail
                                                                             </button>
                                                                         </form>
-                                                                        <form role="form" action="<?php echo base_url('admin/toyscategory/form')?>" method="post">
-                                                                            <input type="hidden" name="id_update" value="<?php echo $categoryModel->id; ?>">
+                                                                        <form role="form" action="<?php echo base_url('admin/toys/form')?>" method="post">
+                                                                            <input type="hidden" name="id_update" value="<?php echo $toys->id; ?>">
                                                                             <button type="submit" class="dropdown-item btn-primary">
                                                                                 <i class="fa fa-edit"></i> Ubah
                                                                             </button>
                                                                         </form>
                                                                         <div class="dropdown-divider"></div>
-                                                                        <button type="button" class="dropdown-item btn-primary" onclick="deleteAlert('<?php echo $categoryModel->id; ?>', '<?php echo $categoryModel->cat_name; ?>')">
+                                                                        <button type="button" class="dropdown-item btn-primary" onclick="deleteAlert('<?php echo $toys->id; ?>', '<?php echo $toys->toy_name; ?>', '<?php echo $toys->toy_quantity; ?>', '<?php echo $toys->toy_price_string; ?>')">
                                                                             <i class="fa fa-trash"></i> Hapus
                                                                         </button>
                                                                     </div>
                                                                 </div>
+                                                                <!-- <div class="col-xs-2 ">
+                                                                <form role="form" action="<?php echo base_url('dashboard/toyscategory/detail')?>" method="post">
+                                                                    <input type="hidden" name="id_detail" value="<?php echo $toys->id; ?>">
+                                                                    <button type="submit" class="btn btn-social-icon btn-info">
+                                                                        <i class="fa fa-search"></i>
+                                                                    </button>
+                                                                </form>
+                                                                </div>
+                                                                <div class="col-xs-2 ">
+                                                                <form role="form" action="<?php echo base_url('admin/toyscategory/form')?>" method="post">
+                                                                    <input type="hidden" name="id_update" value="<?php echo $toys->id; ?>">
+                                                                    <button type="submit" class="btn btn-social-icon btn-warning">
+                                                                        <i class="fa fa-edit"></i>
+                                                                    </button>
+                                                                </form>
+                                                                </div>
+                                                                <div class="col-xs-2 ">
+                                                                <form role="form" action="<?php echo base_url('admin/toyscategory/delete')?>" method="post">
+                                                                    <input type="hidden" name="id_delete" value="<?php echo $toys->id; ?>">
+                                                                    <button type="submit" class="btn btn-social-icon btn-danger" onclick="return confirm('Apakah Anda Yakin ingin menghapus data ini ?')">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                                </div> -->
                                                             </td>
                                                         </tr>
                                                     <?php }} ?>
@@ -125,7 +155,11 @@
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>
-                                                        <th>Kategori</th>
+                                                        <th>Nama Mainan</th>
+                                                        <th>Jumlah</th>
+                                                        <th>Harga Satuan (IDR)</th>
+                                                        <th>Id Kategori Mainan</th>
+                                                        <th>Kategori Mainan</th>
                                                         <th>Tanggal dibuat</th>
                                                         <th>Dibuat oleh</th>
                                                         <th>Tanggal diubah</th>
@@ -134,16 +168,20 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php 
-                                                    if($toysCategoryModel){
+                                                    if($toysModel){
                                                         $id = 1;
-                                                    foreach($toysCategoryModel as $categoryModel) { ?>
+                                                    foreach($toysModel as $toys) { ?>
                                                         <tr>
                                                             <td><?php echo $id++ ?></td>
-                                                            <td><?php echo $categoryModel->cat_name; ?></td>
-                                                            <td><?php echo $categoryModel->created_date; ?></td>
-                                                            <td><?php echo $categoryModel->created_by; ?></td>
-                                                            <td><?php echo $categoryModel->updated_date; ?></td>
-                                                            <td><?php echo $categoryModel->updated_by; ?></td>
+                                                            <td><?php echo $toys->toy_name; ?></td>
+                                                            <td><?php echo $toys->toy_quantity; ?></td>
+                                                            <td><?php echo $toys->toy_price_string; ?></td>
+                                                            <td><?php echo $toys->id_cat; ?></td>
+                                                            <td><?php echo $toys->cat_name; ?></td>
+                                                            <td><?php echo $toys->created_date; ?></td>
+                                                            <td><?php echo $toys->created_by; ?></td>
+                                                            <td><?php echo $toys->updated_date; ?></td>
+                                                            <td><?php echo $toys->updated_by; ?></td>
                                                         </tr>
                                                     <?php }} ?>
                                                 </tbody>
@@ -152,20 +190,21 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="modal fade bs-example-modal-lg" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-trash"></i> Hapus Kategori Mainan</h4>
+                                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-trash"></i> Hapus Mainan</h4>
                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                                         </button>
                                     </div>
-                                    <form role="form" action="<?php echo base_url('admin/toyscategory/delete')?>" method="post">
+                                    <form role="form" action="<?php echo base_url('admin/toys/delete')?>" method="post">
                                         <div class="modal-body">
                                             <input type="hidden" name="id_delete" id="id_delete" value="">
                                             <p id="first_paragraph"></p>
-                                            <p><h4>Anda tidak bisa mengembalikan Data Kategori Mainan ini setelah Anda menghapusnya. Apakah Anda yakin ingin menghapus Kategori Mainan ini ?</h4></p>
+                                            <p id="second_paragraph"></p>
+                                            <p><h4>Anda tidak bisa mengembalikan Data Mainan ini setelah Anda menghapusnya. Apakah Anda yakin ingin menghapus Mainan ini ?</h4></p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -174,7 +213,7 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>   
+                        </div>    
                     </div>
                 </div>
             </div>
@@ -184,13 +223,15 @@
 <!-- /page content -->
 
 <script>
-    function deleteAlert(idCat, catName)
+    function deleteAlert(idMainan, namaMainan, stokMainan, hargaMainan)
     {
-        document.getElementById("id_delete").value = idCat;
+        document.getElementById("id_delete").value = idMainan;
 
         var firstParagraph = document.getElementById("first_paragraph");
-        firstParagraph.innerHTML = "Kategori Mainan <h4><strong>" + catName + "</strong></h4>";
+        firstParagraph.innerHTML = "Mainan <h4><strong>" + namaMainan + "</strong></h4>";
 
+        var secondParagraph = document.getElementById("second_paragraph");
+        secondParagraph.innerHTML = "Stok Mainan <h4><strong>" + stokMainan + "</strong></h4> Harga Mainan per Satuan IDR <h4><strong>" + hargaMainan + "</strong></h4>";
         $('#deleteModal').modal('show'); 
     }
 </script>

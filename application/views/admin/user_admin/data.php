@@ -40,71 +40,149 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="card-box table-responsive">
-                                    <p class="text-muted font-13 m-b-30">
-                                    The Buttons extension for DataTables provides a common set of options, API methods and styling to display buttons on a page that will interact with a DataTable. The core library provides the based framework upon which plug-ins can built.
-                                    </p>
-                                    <table id="datatable-buttons" class="table table-striped table-bordered" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Username</th>
-                                                <th>Nama</th>
-                                                <th>Role</th>
-                                                <th>Tanggal dibuat</th>
-                                                <th>Dibuat oleh</th>
-                                                <th>Tanggal diubah</th>
-                                                <th>Diubah oleh</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php 
-                                            if($usersAdminModel){
-                                                $id = 1;
-                                            foreach($usersAdminModel as $usersAdmin) { ?>
-                                                <tr>
-                                                    <td><?php echo $id++ ?></td>
-                                                    <td><?php echo $usersAdmin->email; ?></td>
-                                                    <td><?php echo $usersAdmin->name; ?></td>
-                                                    <td><?php echo $usersAdmin->user_role; ?></td>
-                                                    <td><?php echo $usersAdmin->created_date; ?></td>
-                                                    <td><?php echo $usersAdmin->created_by; ?></td>
-                                                    <td><?php echo $usersAdmin->updated_date; ?></td>
-                                                    <td><?php echo $usersAdmin->updated_by; ?></td>
-                                                    <td>
-                                                        <div class="col-xs-2 ">
-                                                        <form role="form" action="<?php echo base_url('dashboard/mahasiswa/detail')?>" method="post">
-                                                            <input type="hidden" name="id_detail" value="<?php echo $usersAdmin->id; ?>">
-                                                            <button type="submit" class="btn btn-social-icon btn-info">
-                                                                <i class="fa fa-search"></i>
-                                                            </button>
-                                                        </form>
-                                                        </div>
-                                                        <div class="col-xs-2 ">
-                                                        <form role="form" action="<?php echo base_url('admin/usersadmin/form')?>" method="post">
-                                                            <input type="hidden" name="id_update" value="<?php echo $usersAdmin->id; ?>">
-                                                            <button type="submit" class="btn btn-social-icon btn-warning">
-                                                                <i class="fa fa-edit"></i>
-                                                            </button>
-                                                        </form>
-                                                        </div>
-                                                        <div class="col-xs-2 ">
-                                                        <form role="form" action="<?php echo base_url('admin/usersadmin/delete')?>" method="post">
-                                                            <input type="hidden" name="id_delete" value="<?php echo $usersAdmin->id; ?>">
-                                                            <button type="submit" class="btn btn-social-icon btn-danger" onclick="return confirm('Apakah Anda Yakin ingin menghapus data ini ?')">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
-                                                        </form>
-                                                        </div>
-                                                        
-                                                    </td>
-                                                </tr>
-                                            <?php }} ?>
-                                        </tbody>
-                                    </table>
+                        <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="admin-modified-tab" data-toggle="tab" href="#admin-modified" role="tab" aria-controls="admin-modified" aria-selected="true">Modified Access</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="admin-report-tab" data-toggle="tab" href="#admin-report" role="tab" aria-controls="admin-report" aria-selected="false">Data Report</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="admin-modified" role="tabpanel" aria-labelledby="admin-modified-tab">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card-box table-responsive">
+                                            <p class="text-muted font-13 m-b-30">
+                                            The Buttons extension for DataTables provides a common set of options, API methods and styling to display buttons on a page that will interact with a DataTable. The core library provides the based framework upon which plug-ins can built.
+                                            </p>
+                                            <table id="datatable-admin-modified" class="table table-striped table-bordered" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Username</th>
+                                                        <th>Nama</th>
+                                                        <th>Role</th>
+                                                        <th>Tanggal dibuat</th>
+                                                        <th>Dibuat oleh</th>
+                                                        <th>Tanggal diubah</th>
+                                                        <th>Diubah oleh</th>
+                                                        <th>Aksi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                    if($usersAdminModel){
+                                                        $id = 1;
+                                                    foreach($usersAdminModel as $usersAdmin) { ?>
+                                                        <tr>
+                                                            <td><?php echo $id++ ?></td>
+                                                            <td><?php echo $usersAdmin->email; ?></td>
+                                                            <td><?php echo $usersAdmin->name; ?></td>
+                                                            <td><?php echo $usersAdmin->user_role; ?></td>
+                                                            <td><?php echo $usersAdmin->created_date; ?></td>
+                                                            <td><?php echo $usersAdmin->created_by; ?></td>
+                                                            <td><?php echo $usersAdmin->updated_date; ?></td>
+                                                            <td><?php echo $usersAdmin->updated_by; ?></td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false">
+                                                                    Aksi
+                                                                    </button>
+                                                                    <div class="dropdown-menu">
+                                                                        <form role="form" action="<?php echo base_url('admin/usersadmin/detail')?>" method="post">
+                                                                            <input type="hidden" name="id_detail" value="<?php echo $usersAdmin->id; ?>">
+                                                                            <button type="submit" class="dropdown-item btn-primary">
+                                                                                <i class="fa fa-search"></i> Lihat Detail
+                                                                            </button>
+                                                                        </form>
+                                                                        <form role="form" action="<?php echo base_url('admin/usersadmin/form')?>" method="post">
+                                                                            <input type="hidden" name="id_update" value="<?php echo $usersAdmin->id; ?>">
+                                                                            <button type="submit" class="dropdown-item btn-primary">
+                                                                                <i class="fa fa-edit"></i> Ubah
+                                                                            </button>
+                                                                        </form>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <button type="button" class="dropdown-item btn-primary" onclick="deleteAlert('<?php echo $usersAdmin->id; ?>', '<?php echo $usersAdmin->email; ?>', '<?php echo $usersAdmin->name; ?>', '<?php echo $usersAdmin->user_role; ?>')">
+                                                                            <i class="fa fa-trash"></i> Hapus
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php }} ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="admin-report" role="tabpanel" aria-labelledby="admin-report-tab">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="card-box table-responsive">
+                                            <p class="text-muted font-13 m-b-30">
+                                            The Buttons extension for DataTables provides a common set of options, API methods and styling to display buttons on a page that will interact with a DataTable. The core library provides the based framework upon which plug-ins can built.
+                                            </p>
+                                            <table id="datatable-admin-report" class="table table-striped table-bordered" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Username</th>
+                                                        <th>Nama</th>
+                                                        <th>Kode Role</th>
+                                                        <th>Role</th>
+                                                        <th>Tanggal dibuat</th>
+                                                        <th>Dibuat oleh</th>
+                                                        <th>Tanggal diubah</th>
+                                                        <th>Diubah oleh</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                    if($usersAdminModel){
+                                                        $id = 1;
+                                                    foreach($usersAdminModel as $usersAdmin) { ?>
+                                                        <tr>
+                                                            <td><?php echo $id++ ?></td>
+                                                            <td><?php echo $usersAdmin->email; ?></td>
+                                                            <td><?php echo $usersAdmin->name; ?></td>
+                                                            <td><?php echo $usersAdmin->user_role_code; ?></td>
+                                                            <td><?php echo $usersAdmin->user_role; ?></td>
+                                                            <td><?php echo $usersAdmin->created_date; ?></td>
+                                                            <td><?php echo $usersAdmin->created_by; ?></td>
+                                                            <td><?php echo $usersAdmin->updated_date; ?></td>
+                                                            <td><?php echo $usersAdmin->updated_by; ?></td>
+                                                        </tr>
+                                                    <?php }} ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade bs-example-modal-lg" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel"><i class="fa fa-trash"></i> Hapus User Admin</h4>
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <form role="form" action="<?php echo base_url('admin/usersadmin/delete')?>" method="post">
+                                        <div class="modal-body">
+                                            <input type="hidden" name="id_delete" id="id_delete" value="">
+                                            <p id="first_paragraph"></p>
+                                            <p id="second_paragraph"></p>
+                                            <p><h4>Anda tidak bisa mengembalikan Data User Admin ini setelah Anda menghapusnya. Apakah Anda yakin ingin menghapus User Admin ini ?</h4></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -115,3 +193,20 @@
     </div>
 </div>
 <!-- /page content -->
+
+<script>
+    function deleteAlert(idUser, username, name, roleName)
+    {
+        document.getElementById("id_delete").value = idUser;
+
+        var firstParagraph = document.getElementById("first_paragraph");
+        firstParagraph.innerHTML = "Username <h4><strong>" + username + "</strong></h4>";
+
+        var secondParagraph = document.getElementById("second_paragraph");
+        secondParagraph.innerHTML = "Nama <h4><strong>" + name + "</strong></h4> Role User sebagai <h4><strong>" + roleName + "</strong></h4>";
+        $('#deleteModal').modal('show'); 
+    }
+</script>
+
+
+
