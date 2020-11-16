@@ -1,4 +1,13 @@
 ###################
+Toy Shop
+###################
+- Run Your XAMPP, Start Apache and MyQsl Services
+- Open your MySql
+- Create database with name toys_shop 
+- Export Database in folder assets/database_sql, File name toys_shop.sql to your database (toys_shop) was created.
+- Hit the url in your browser http://localhost/toys_shop/admin/dashboard/
+
+###################
 What is CodeIgniter
 ###################
 
