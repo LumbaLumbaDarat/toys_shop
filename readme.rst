@@ -1,7 +1,7 @@
 ###################
 Toy Shop
 ###################
-- Run Your XAMPP, Start Apache and MyQsl Services
+- Run Your XAMPP, Start Apache and MySql Services
 - Open your MySql
 - Create database with name toys_shop 
 - Export Database in folder assets/database_sql, File name toys_shop.sql to your database (toys_shop) was created.
