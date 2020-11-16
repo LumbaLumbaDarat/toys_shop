@@ -87,12 +87,6 @@
                                                                     Aksi
                                                                     </button>
                                                                     <div class="dropdown-menu">
-                                                                        <form role="form" action="<?php echo base_url('dashboard/toyscategory/detail')?>" method="post">
-                                                                            <input type="hidden" name="id_detail" value="<?php echo $categoryModel->id; ?>">
-                                                                            <button type="submit" class="dropdown-item btn-primary">
-                                                                                <i class="fa fa-search"></i> Lihat Detail
-                                                                            </button>
-                                                                        </form>
                                                                         <form role="form" action="<?php echo base_url('admin/toyscategory/form')?>" method="post">
                                                                             <input type="hidden" name="id_update" value="<?php echo $categoryModel->id; ?>">
                                                                             <button type="submit" class="dropdown-item btn-primary">

@@ -22,7 +22,7 @@ class Toys extends CI_Controller {
             $newToysModel->toy_quantity = $toys->toy_quantity;
 			$newToysModel->toy_price = $toys->toy_price;
 			$newToysModel->toy_price_string = $this->utilityModel->converterCurrencyIDR($toys->toy_price);
-            $newToysModel->created_date = $this->utilityModel->converterMonthNameForDateTime($toys->created_date);
+            $newToysModel->created_date = $this->utilityModel->converterMonthNameForDateTime('DATE_TIME', $toys->created_date);
             $newToysModel->created_by = $toys->created_by;
             $newToysModel->updated_date = $this->utilityModel->checkParamIsEmpty('DATETIME', $toys->updated_date);
             $newToysModel->updated_by = $this->utilityModel->checkParamIsEmpty('STRING', $toys->updated_by);
@@ -97,7 +97,7 @@ class Toys extends CI_Controller {
 			'toy_price'    => $toyPrice,
 			'toy_desc'     => $toyDesc,
 			'toy_image'    => $imageNameBeforeUploadImage,
-			'created_date' => $this->utilityModel->sysDate(),
+			'created_date' => $this->utilityModel->sysDate('DATE_TIME'),
 			'created_by'   => 'Admin'
 			);
 
@@ -158,7 +158,7 @@ class Toys extends CI_Controller {
 					'toy_price'    => $toyPrice,
 					'toy_desc'     => $toyDesc,
 					'toy_image'    => $this->upload->data('file_name'),
-					'updated_date' => $this->utilityModel->sysDate(),
+					'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
 					'updated_by'   => 'Admin'
 					);
 			}
@@ -168,7 +168,7 @@ class Toys extends CI_Controller {
 					'toy_quantity' => $toyQuantity,
 					'toy_price'    => $toyPrice,
 					'toy_desc'     => $toyDesc,
-					'updated_date' => $this->utilityModel->sysDate(),
+					'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
 					'updated_by'   => 'Admin'
 					);
 

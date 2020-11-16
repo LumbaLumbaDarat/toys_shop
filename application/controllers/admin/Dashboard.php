@@ -35,7 +35,7 @@ class Dashboard extends CI_Controller {
 
 		$data = [
 			'simpleReportModel'    		  => $simpleReportArray,
-			'lastInquiry'    			  => $this->utilityModel->converterMonthNameForDateTime($this->utilityModel->sysDate())
+			'lastInquiry'    			  => $this->utilityModel->converterMonthNameForDateTime('DATE_TIME', $this->utilityModel->sysDate('DATE_TIME'))
 		];
 
 		$this->load->view('admin/header');

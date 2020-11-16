@@ -15,7 +15,7 @@ class ToysCategory extends CI_Controller {
             $newToysCategoryModel->id = $toysCategory->id;
             $newToysCategoryModel->cat_name = $toysCategory->cat_name;
             $newToysCategoryModel->cat_desc = $toysCategory->cat_desc;
-            $newToysCategoryModel->created_date = $this->utilityModel->converterMonthNameForDateTime($toysCategory->created_date);
+            $newToysCategoryModel->created_date = $this->utilityModel->converterMonthNameForDateTime('DATE_TIME', $toysCategory->created_date);
             $newToysCategoryModel->created_by = $toysCategory->created_by;
             $newToysCategoryModel->updated_date = $this->utilityModel->checkParamIsEmpty('DATETIME', $toysCategory->updated_date);
             $newToysCategoryModel->updated_by = $this->utilityModel->checkParamIsEmpty('STRING', $toysCategory->updated_by);
@@ -66,7 +66,7 @@ class ToysCategory extends CI_Controller {
 		$data = array(
 			'cat_name'     => $catName,
 			'cat_desc' 	   => $catDesc,
-			'created_date' => $this->utilityModel->sysDate(),
+			'created_date' => $this->utilityModel->sysDate('DATE_TIME'),
 			'created_by'   => 'Admin'
 			);
 
@@ -89,7 +89,7 @@ class ToysCategory extends CI_Controller {
 		$data = array(
 			'cat_name'     => $catName,
 			'cat_desc'     => $catDesc,
-			'updated_date' => $this->utilityModel->sysDate(),
+			'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
 			'updated_by'   => 'Admin'
 			);
 

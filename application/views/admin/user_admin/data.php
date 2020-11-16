@@ -94,6 +94,13 @@
                                                                         <form role="form" action="<?php echo base_url('admin/usersadmin/detail')?>" method="post">
                                                                             <input type="hidden" name="id_detail" value="<?php echo $usersAdmin->id; ?>">
                                                                             <button type="submit" class="dropdown-item btn-primary">
+                                                                                <i class="fa fa-key"></i> Reset Password
+                                                                            </button>
+                                                                        </form>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <form role="form" action="<?php echo base_url('admin/usersadmin/detail')?>" method="post">
+                                                                            <input type="hidden" name="id_detail" value="<?php echo $usersAdmin->id; ?>">
+                                                                            <button type="submit" class="dropdown-item btn-primary">
                                                                                 <i class="fa fa-search"></i> Lihat Detail
                                                                             </button>
                                                                         </form>
@@ -131,8 +138,10 @@
                                                         <th>No</th>
                                                         <th>Username</th>
                                                         <th>Nama</th>
-                                                        <th>Kode Role</th>
+                                                        <th>Kelamin</th>
                                                         <th>Role</th>
+                                                        <th>Tanggal Lahir</th>
+                                                        <th>Alamat</th>
                                                         <th>Tanggal dibuat</th>
                                                         <th>Dibuat oleh</th>
                                                         <th>Tanggal diubah</th>
@@ -148,8 +157,10 @@
                                                             <td><?php echo $id++ ?></td>
                                                             <td><?php echo $usersAdmin->email; ?></td>
                                                             <td><?php echo $usersAdmin->name; ?></td>
-                                                            <td><?php echo $usersAdmin->user_role_code; ?></td>
+                                                            <td><?php echo $usersAdmin->sex_name; ?></td>
                                                             <td><?php echo $usersAdmin->user_role; ?></td>
+                                                            <td><?php echo $usersAdmin->birthday; ?></td>
+                                                            <td><?php echo $usersAdmin->address; ?></td>
                                                             <td><?php echo $usersAdmin->created_date; ?></td>
                                                             <td><?php echo $usersAdmin->created_by; ?></td>
                                                             <td><?php echo $usersAdmin->updated_date; ?></td>

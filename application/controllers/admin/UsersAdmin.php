@@ -20,7 +20,11 @@ class UsersAdmin extends CI_Controller {
 			$newUserRoleModel = $this->usersRoleModel->getDataWhere($usersAdmin->user_role);
 
 			$newUsersAdminModel->user_role = $newUserRoleModel->role_name;
-			$newUsersAdminModel->created_date = $this->utilityModel->converterMonthNameForDateTime($usersAdmin->created_date);
+			$newUsersAdminModel->sex = $usersAdmin->sex;
+			$newUsersAdminModel->sex_name = $this->utilityModel->getSexName($usersAdmin->sex);
+			$newUsersAdminModel->birthday = $this->utilityModel->converterMonthNameForDateTime('DATE', $usersAdmin->birthday);
+			$newUsersAdminModel->address = $usersAdmin->address;
+			$newUsersAdminModel->created_date = $this->utilityModel->converterMonthNameForDateTime('DATE_TIME', $usersAdmin->created_date);
 			$newUsersAdminModel->created_by = $usersAdmin->created_by;
 			$newUsersAdminModel->updated_date = $this->utilityModel->checkParamIsEmpty('DATETIME', $usersAdmin->updated_date);
 			$newUsersAdminModel->updated_by = $this->utilityModel->checkParamIsEmpty('STRING', $usersAdmin->updated_by);
@@ -44,6 +48,9 @@ class UsersAdmin extends CI_Controller {
 			$newUsersAdminModel->id 	   = '';
 			$newUsersAdminModel->name 	   = '';
 			$newUsersAdminModel->email 	   = '';
+			$newUsersAdminModel->sex 	   = 'L';
+			$newUsersAdminModel->birthday  = $this->utilityModel->sysDate('DATE');
+			$newUsersAdminModel->address   = '';
 			$newUsersAdminModel->role_code = '';
 			$newUsersAdminModel->photo_profile = 'admin_photo.png';
 			
@@ -60,7 +67,8 @@ class UsersAdmin extends CI_Controller {
 
 		$dataHeader['title'] = "Users Admin";
 		$data['usersRoleModel'] = $this->usersRoleModel->getData()->result();
-		
+		$data['sexTypeModel'] = $this->utilityModel->getSex();
+
 		$this->load->view('admin/header', $dataHeader);
 		$this->load->view('admin/user_admin/form', $data);
 		$this->load->view('admin/footer');
@@ -69,8 +77,11 @@ class UsersAdmin extends CI_Controller {
 	public function save()
 	{
 		$message;
-		$name = $this->input->post('name');
-		$email = $this->input->post('email');
+		$name 	  = $this->input->post('name');
+		$email    = $this->input->post('email');
+		$sex  	  = $this->input->post('sex');
+		$birthday = $this->input->post('birthday');
+		$address  = $this->input->post('address');
 
 		$roles = explode('|', $this->input->post('user_role'));
 		$usersRole = trim($roles[0], ' ');
@@ -79,8 +90,11 @@ class UsersAdmin extends CI_Controller {
 			'user_role'    => $usersRole,
 			'name' 		   => $name,
 			'email' 	   => $email,
+			'sex' 	   	   => $sex,
+			'birthday' 	   => $birthday,
+			'address' 	   => $address,
 			'password'     => $this->utilityModel->setDefaultPasswordUserAdmin(),
-			'created_date' => $this->utilityModel->sysDate(),
+			'created_date' => $this->utilityModel->sysDate('DATE_TIME'),
 			'created_by'   => 'Admin'
 			);
 
@@ -115,9 +129,12 @@ class UsersAdmin extends CI_Controller {
 
 	public function update()
 	{
-		$id    = $this->input->post('id');
-		$name  = $this->input->post('name');
-		$email = $this->input->post('email');
+		$id    	  = $this->input->post('id');
+		$name  	  = $this->input->post('name');
+		$email 	  = $this->input->post('email');
+		$sex      = $this->input->post('sex');
+		$birthday = $this->input->post('birthday');
+		$address  = $this->input->post('address');
 		$photo_profile = $_FILES['photo_profile'];
 
 		$roles = explode('|', $this->input->post('user_role'));
@@ -145,15 +162,21 @@ class UsersAdmin extends CI_Controller {
 				$data = array(
 					'user_role'    => $usersRole,
 					'name'         => $name,
+					'sex'          => $sex,
+					'birthday'     => $birthday,
+					'address'      => $address,
 					'photo_profile'=> $this->upload->data('file_name'),
-					'updated_date' => $this->utilityModel->sysDate(),
+					'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
 					'updated_by'   => 'Admin'
 					);
 			}
 		}else $data = array(
 					'user_role'    => $usersRole,
 					'name'         => $name,
-					'updated_date' => $this->utilityModel->sysDate(),
+					'sex'          => $sex,
+					'birthday'     => $birthday,
+					'address'      => $address,
+					'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
 					'updated_by'   => 'Admin'
 					);
 
@@ -164,7 +187,9 @@ class UsersAdmin extends CI_Controller {
 			'Data User Admin, <strong>'.$name.'</strong> dengan Username <strong>'.$email.'</strong> berhasil diubah !';
 
 		$this->session->set_flashdata('message', $message);
-        return redirect('admin/usersadmin');
+		return redirect('admin/usersadmin');
+		
+		if(empty($sexType->id) && $usersAdminModel->sex == 'L') { echo 'checked'; } else { if($sexType->id == $usersAdminModel->sex) echo 'checked'; }
 	}
 
 	public function delete()

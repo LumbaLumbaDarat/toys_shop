@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                                 <div class="field item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 label-align">Kategori<span class="required">*</span></label>
+                                    <label class="control-label col-md-3 col-sm-3 label-align">Kategori Mainan<span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 ">
                                         <select class="form-control" class='id_cat' name="id_cat"  id="id_cat" required>
                                             <?php 
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="field item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Stok<span class="required">*</span></label>
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Stok Mainan<span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6">
                                         <input class="form-control" name="toy_quantity" id="toy_quantity" required="required" value="<?php echo $toysModel->toy_quantity ?>"/>
                                     </div>
@@ -78,13 +78,13 @@
                                     </div>
                                 </div>
                                 <div class="field item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Deskripsi<span class="required">*</span></label>
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Deskripsi Mainan<span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6">
                                         <textarea id="toy_desc" required="required" class="form-control" name="toy_desc" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="500" data-parsley-minlength-message="Masukkan minimum 10 karater, untuk Deskripsi Kategori Mainan..." data-parsley-validation-threshold="10"><?php echo $toysModel->toy_desc ?></textarea>
                                     </div>
                                 </div>
                                 <div class="field item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 label-align">Gambar<span class="required">*</span></label>
+                                    <label class="control-label col-md-3 col-sm-3 label-align">Foto Mainan<span class="required">*</span></label>
                                     <div class="col-md-6 col-sm-6 ">
                                     <input type="file" class="form-control-file" id="toy_image" name="toy_image" onchange="previewImg()" <?php if(empty($toysModel->id)) echo 'required'; ?>/>
                                     </div>
@@ -144,7 +144,7 @@
                                                             <label for="old_toy_price">Harga Satuan IDR</label>
                                                             <input type="text" id="old_toy_price" class="form-control" name="old_toy_price" value="<?php echo $toysModel->toy_price ?>" readonly="readonly"/>
                                                             <br>
-                                                            <label for="old_toy_desc">Deskripsi</label>
+                                                            <label for="old_toy_desc">Deskripsi Mainan</label>
                                                             <textarea id="old_toy_desc" class="form-control" name="old_toy_desc" readonly><?php echo $toysModel->toy_desc ?></textarea>
                                                             <br>
                                                             <label for="old_toy_image">Foto Mainan</label>
@@ -184,7 +184,7 @@
                                                             <label for="new_toy_price">Harga Satuan IDR</label>
                                                             <input type="text" id="new_toy_price" class="form-control" name="new_toy_price" value="<?php echo $toysModel->toy_price ?>" readonly="readonly"/>
                                                             <br>
-                                                            <label for="new_toy_desc">Deskripsi</label>
+                                                            <label for="new_toy_desc">Deskripsi Mainan</label>
                                                             <textarea id="new_toy_desc" class="form-control" name="new_toy_desc" readonly><?php echo $toysModel->toy_desc ?></textarea>
                                                             <br>
                                                             <label for="old_toy_image">Foto Mainan</label>

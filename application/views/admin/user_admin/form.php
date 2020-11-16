@@ -43,23 +43,61 @@
                                 </p>
                                 <span class="section">Personal Info</span>
                                 <div class="field item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Name<span class="required">*</span></label>
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Nama User Admin<span class="required text-danger">*</span></label>
                                     <div class="col-md-6 col-sm-6">
                                         <input class="form-control" data-validate-length-range="6" data-validate-words="2" id="name" name="name" required="required" value="<?php echo $usersAdminModel->name ?>"/>
                                     </div>
                                 </div>
                                 <div class="field item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3  label-align">email<span class="required">*</span></label>
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Email User Admin<span class="required text-danger">*</span></label>
                                     <div class="col-md-6 col-sm-6">
-                                        <input class="form-control" id="email" name="email" class='email' required="required" type="email" value="<?php echo $usersAdminModel->email ?>" <?php if(!empty($usersAdminModel->email)) echo 'readonly="readonly"'; ?>/></div>
+                                        <input class="form-control" id="email" name="email" class='email' required="required" type="email" value="<?php echo $usersAdminModel->email ?>" <?php if(!empty($usersAdminModel->email)) echo 'readonly="readonly"'; ?>/>
+                                        <label class="text-danger">Email harus unik, Email akan digunakan sebagai User Name Admin.</label>
+                                    </div>
                                 </div>
                                 <div class="field item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Confirm email address<span class="required">*</span></label>
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Jenis Kelamin<span class="required text-danger">*</span></label>
                                     <div class="col-md-6 col-sm-6">
-                                        <input class="form-control" type="email" class='email' id="confirm_email" name="confirm_email" data-validate-linked='email' required='required' /></div>
+                                        <?php 
+                                            $oldSex;
+                                            $sex = $usersAdminModel->sex;
+                                            if($sexTypeModel){
+                                            foreach($sexTypeModel as $sexType) { 
+                                                if(!empty($sex) && $sexType->id == $sex)
+                                                        $oldSex = $sexType->name; ?>
+                                        <div class="radio">
+                                            <input type="radio" class="flat" name="sex" id="<?php echo 'sex_'.$sexType->id ?>" value="<?php echo $sexType->id ?>" <?php if(empty($sexType->id) && $usersAdminModel->sex == 'L') { echo 'checked'; } else { if($sexType->id == $usersAdminModel->sex) echo 'checked'; } ?> /> <label><?php echo $sexType->name ?></label>
+                                        </div>
+                                        <?php }} ?>
+                                    </div>
                                 </div>
                                 <div class="field item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 label-align">Select<span class="required">*</span></label>
+                                    <label class="control-label col-md-3 col-sm-3 label-align">Tanggal Lahir<span class="required text-danger">*</span></label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <input id="birthday" name="birthday" class="date-picker form-control" placeholder="dd-mm-yyyy" type="text" required="required" type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)" value="<?php echo $usersAdminModel->birthday ?>">
+                                        <script>
+                                            function timeFunctionLong(input) {
+                                                setTimeout(function() {
+                                                    input.type = 'text';
+                                                }, 60000);
+                                            }
+                                        </script>
+                                    </div>
+                                </div>
+                                <div class="field item form-group">
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Alamat Tempat Tinggal<span class="required text-danger">*</span></label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <textarea id="address" required="required" class="form-control" id="address" name="address" data-parsley-trigger="keyup" data-parsley-minlength="10" data-parsley-maxlength="500" data-parsley-minlength-message="Masukkan minimum 10 karater, untuk Alamat Tempat Tinggal..." data-parsley-validation-threshold="10"><?php echo $usersAdminModel->address ?></textarea>
+                                    </div>
+                                </div>
+                                <div class="field item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 label-align">Foto Profil<span class="required text-danger">*</span></label>
+                                    <div class="col-md-6 col-sm-6 ">
+                                        <input type="file" class="form-control-file" id="photo_profile" name="photo_profile" onchange="previewImg()" <?php if(empty($usersAdminModel->id)) echo 'required'; ?>/>
+                                    </div>
+                                </div>
+                                <div class="field item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 label-align">User Admin sebagai<span class="required text-danger">*</span></label>
                                     <div class="col-md-6 col-sm-6 ">
                                         <select class="form-control" class='user_role' id="user_role" name="user_role" required>
                                             <?php 
@@ -75,14 +113,21 @@
                                     </div>
                                 </div>
                                 <div class="field item form-group">
-                                    <label class="control-label col-md-3 col-sm-3 label-align">Example file input</label>
-                                    <div class="col-md-6 col-sm-6 ">
-                                    <input type="file" class="form-control-file" id="photo_profile" name="photo_profile" onchange="previewImg()" <?php if(empty($usersAdminModel->id)) echo 'required'; ?>/>
+                                    <label class="col-form-label col-md-3 col-sm-3  label-align">Konfirmasi Email<span class="required text-danger">*</span></label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input class="form-control" type="email" class='email' id="confirm_email" name="confirm_email" data-validate-linked='email' required='required' />
                                     </div>
                                 </div>
                                 <div class="field item form-group">
                                     <div class="col-md-6 col-sm-6">
-                                        <input class="form-control" class='id' name="id" value="<?php echo $usersAdminModel->id ?>" hidden/></div>
+                                        <input class="form-control" class='id' name="id" value="<?php echo $usersAdminModel->id ?>" hidden/>
+                                    </div>
+                                </div>
+                                <div class="field item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 label-align"></label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <label class="text-danger">Wajib diisi untuk setiap Form bertanda *</label>
+                                    </div>
                                 </div>
                                 <div class="ln_solid">
                                     <div class="form-group">
@@ -123,13 +168,26 @@
                                                             <div class="clearfix"></div>
                                                         </div>
                                                         <div class="x_content">
-                                                            <label for="old_name">Nama</label>
+                                                            <label for="old_name">Nama User Admin</label>
                                                             <input type="text" id="old_name" class="form-control" name="old_name" value="<?php echo $usersAdminModel->name ?>" readonly="readonly"/>
-                                                            <label for="old_email">Email</label>
+                                                            <br>
+                                                            
+                                                            <label for="old_email">Email User Admin</label>
                                                             <input type="text" id="old_email" class="form-control" name="old_email" value="<?php echo $usersAdminModel->email ?>" readonly="readonly"/>
-                                                            <label for="old_user_role">User Role</label>
+                                                            <br>
+                                                            <label for="old_sex">Jenis Kelamin</label>
+                                                            <input type="text" id="old_sex" class="form-control" name="old_sex" value="<?php echo $oldSex ?>" readonly="readonly"/>
+                                                            <br>
+                                                            <label for="old_birthday">Tanggal Lahir</label>
+                                                            <input type="text" id="old_birthday" class="form-control" name="old_birthday" value="<?php echo $usersAdminModel->birthday ?>" readonly="readonly"/>
+                                                            <br>
+                                                            <label for="old_address">Alamat Tempat Tinggal</label>
+                                                            <textarea id="old_address" class="form-control" name="old_address" readonly><?php echo $usersAdminModel->address ?></textarea>
+                                                            <br>
+                                                            <label for="old_user_role">User Admin sebagai</label>
                                                             <input type="text" id="old_user_role" class="form-control" name="old_user_role" value="<?php echo $oldUserAdminRole ?>" readonly="readonly"/>
-                                                            <label for="old_user_role">Photo Profile</label>
+                                                            <br>
+                                                            <label for="old_user_role">Foto Profil</label>
                                                             <img class="img-thumbnail avatar-view old-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Foto User Admin Lama">
                                                         </div>
                                                     </div>
@@ -154,13 +212,25 @@
                                                             <div class="clearfix"></div>
                                                         </div>
                                                         <div class="x_content">
-                                                            <label for="new_name">Nama</label>
-                                                            <input type="text" id="new_name" class="form-control" name="new_name" readonly="readonly"/>
-                                                            <label for="new_email">Email</label>
-                                                            <input type="text" id="new_email" class="form-control" name="new_email" readonly="readonly"/>
-                                                            <label for="new_user_role">User Role</label>
+                                                            <label for="new_name">Nama User Admin</label>
+                                                            <input type="text" id="new_name" class="form-control" name="new_name" value="<?php echo $usersAdminModel->name ?>" readonly="readonly"/>
+                                                            <br>
+                                                            <label for="new_email">Email User Admin</label>
+                                                            <input type="text" id="new_email" class="form-control" name="new_email" value="<?php echo $usersAdminModel->email ?>" readonly="readonly"/>
+                                                            <br>
+                                                            <label for="new_sex">Jenis Kelamin</label>
+                                                            <input type="text" id="new_sex" class="form-control" name="new_sex" value="<?php echo $usersAdminModel->sex ?>" readonly="readonly"/>
+                                                            <br>
+                                                            <label for="new_birthday">Tanggal Lahir</label>
+                                                            <input type="text" id="new_birthday" class="form-control" name="new_birthday" value="<?php echo $usersAdminModel->birthday ?>" readonly="readonly"/>
+                                                            <br>
+                                                            <label for="new_address">Alamat Tempat Tinggal</label>
+                                                            <textarea id="new_address" class="form-control" name="new_address" readonly><?php echo $usersAdminModel->address ?></textarea>
+                                                            <br>
+                                                            <label for="new_user_role">User Admin sebagai</label>
                                                             <input type="text" id="new_user_role" class="form-control" name="new_user_role" readonly="readonly"/>
-                                                            <label for="new_photo_profile">Photo Profile</label>
+                                                            <br>
+                                                            <label for="new_photo_profile">Foto Profil</label>
                                                             <img class="img-thumbnail avatar-view new-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Foto User Admin Baru">
                                                         </div>
                                                     </div>
@@ -211,23 +281,38 @@
         if(!document.getElementById("name").value == null || 
             !document.getElementById("name").value == "")
         {
-            if(!document.getElementById("confirm_email").value == null || 
-            !document.getElementById("confirm_email").value == "")
+            if(!document.getElementById("address").value == null || 
+                !document.getElementById("address").value == "")
             {
-                if(document.getElementById("email").value == 
-                    document.getElementById("confirm_email").value)
-                    {
-                        document.getElementById("new_name").value = document.getElementById("name").value;
-                        document.getElementById("new_email").value = document.getElementById("email").value;
-                        document.getElementById("new_user_role").value = document.getElementById("user_role").value;
+                if(!document.getElementById("confirm_email").value == null || 
+                    !document.getElementById("confirm_email").value == "")
+                {
+                    if(document.getElementById("email").value == 
+                        document.getElementById("confirm_email").value)
+                        {
+                            var sex;
+                            if(document.querySelector('input[name = sex]:checked').value == "L")
+                                sex = "Laki-Laki";
+                            else sex = "Perempuan";
 
-                        $('#updateModal').modal('show'); 
-                    }else{
-                        errorNotification("Email", "Email dan Konfirmasi Email Tidak Valid !");
-                        return false;
-                    }
+                            document.getElementById("new_name").value = document.getElementById("name").value;
+                            document.getElementById("new_email").value = document.getElementById("email").value;
+                            document.getElementById("new_sex").value = sex;
+                            document.getElementById("new_birthday").value = document.getElementById("birthday").value;
+                            document.getElementById("new_address").value = document.getElementById("address").value;
+                            document.getElementById("new_user_role").value = document.getElementById("user_role").value;
+
+                            $('#updateModal').modal('show'); 
+                        }else{
+                            errorNotification("Email", "Email dan Konfirmasi Email Tidak Valid !");
+                            return false;
+                        }
+                }else{
+                    errorNotification("Konfirmasi Email", "Konfirmasi Email Tidak Valid !");
+                    return false;
+                }
             }else{
-                errorNotification("Konfirmasi Email", "Konfirmasi Email Tidak Valid !");
+                errorNotification("Alamat Tempat Tinggal", "Alamat Tempat Tinggal Tidak Valid !");
                 return false;
             }
         }else{
@@ -248,27 +333,6 @@
         });
 }
 </script>
-
-<!-- Javascript functions	-->
-<!-- <script>
-    function hideshow(){
-        var password = document.getElementById("password1");
-        var slash = document.getElementById("slash");
-        var eye = document.getElementById("eye");
-        
-        if(password.type === 'password'){
-            password.type = "text";
-            slash.style.display = "block";
-            eye.style.display = "none";
-        }
-        else{
-            password.type = "password";
-            slash.style.display = "none";
-            eye.style.display = "block";
-        }
-
-    }
-</script> -->
 
 <script>
     // initialize a validator instance from the "FormValidator" constructor.

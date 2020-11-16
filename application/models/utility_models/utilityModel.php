@@ -9,7 +9,7 @@ class UtilityModel extends CI_model{
 		else 
 		{
 			if($typeData == 'DATETIME')
-				return $this->converterMonthNameForDateTime($data);
+				return $this->converterMonthNameForDateTime('DATE_TIME', $data);
 			else return $data;
 		}
 	}
@@ -35,24 +35,33 @@ class UtilityModel extends CI_model{
 
 				if(is_null($resultLastData[0]->id))	
 					return "Tidak Ada";
-				else return $this->converterMonthNameForDateTime($this->db->get_where($tableName, ['id' => $resultLastData[0]->id])->row()->created_date);
+				else return $this->converterMonthNameForDateTime('DATE_TIME', $this->db->get_where($tableName, ['id' => $resultLastData[0]->id])->row()->created_date);
 		  	break;
 		  }
 	}
 	
-	public function converterMonthNameForDateTime($dateTime)
+	public function converterMonthNameForDateTime($type, $dateTime)
 	{
 		if(empty($dateTime) || $dateTime == null || $dateTime == '')
 			return $data = "Tidak Ada";
 		else
 		{
-			$times = explode(" ", $dateTime);
+			if($type == "DATE_TIME")
+			{
+				$times = explode(" ", $dateTime);
 
-			$dateArray = date_parse_from_format('Y/m/d', $dateTime);
-			$month = DateTime::createFromFormat('!m', $dateArray['month'])->format('F');
-			$dateString = $dateArray['day'] . " " . $month  . " " . $dateArray['year'];
+				$dateArray = date_parse_from_format('Y/m/d', $dateTime);
+				$month = DateTime::createFromFormat('!m', $dateArray['month'])->format('F');
+				$dateString = $dateArray['day'] . " " . $month  . " " . $dateArray['year'];
 
-			return $dateString.' '.$times[1];
+				return $dateString.' '.$times[1];
+			}else{
+				$dateArray = date_parse_from_format('Y/m/d', $dateTime);
+				$month = DateTime::createFromFormat('!m', $dateArray['month'])->format('F');
+				$dateString = $dateArray['day'] . " " . $month  . " " . $dateArray['year'];
+
+				return $dateString;
+			}
 		}
 	}
 
@@ -63,13 +72,54 @@ class UtilityModel extends CI_model{
 		else return number_format($currency, 2, ',', '.');
 	}
 
-	public function sysDate()
+	public function sysDate($type)
 	{
-		return date('Y-m-d H:i:s');
+		switch ($type) {
+			case 'DATE':
+					return date('Y-m-d');
+			  break;
+			case 'TIME':
+					return date('H:i:s');
+			  break;
+			case 'DATE_TIME':
+					return date('Y-m-d H:i:s');
+			  break;
+		  }
 	}
 
 	public function setDefaultPasswordUserAdmin()
 	{
-		return "admin";
+		return $this->hashPassword("admin");
+	}
+
+	public function hashPassword($pass_user) 
+	{
+		return password_hash($pass_user, PASSWORD_BCRYPT);
+	}
+
+	public function getSex() 
+	{
+		$sexTypeArray = array();
+
+		$sexTypeModel       = new stdClass;
+		$sexTypeModel->id   = "L";
+		$sexTypeModel->name = "Laki-Laki";
+
+		array_push($sexTypeArray, $sexTypeModel);
+
+		$sexTypeModel 		= new stdClass;
+		$sexTypeModel->id 	= "P";
+		$sexTypeModel->name = "Perempuan";
+
+		array_push($sexTypeArray, $sexTypeModel);
+
+		return $sexTypeArray;
+	}
+
+	public function getSexName($sex) 
+	{
+		if($sex == "L")
+			return "Laki-Laki";
+		else return "Perempuan";
 	}
 }

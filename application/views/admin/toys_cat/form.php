@@ -88,6 +88,7 @@
                                                     <div class="x_content">
                                                         <label for="old_cat_name">Nama Kategori</label>
                                                         <input type="text" id="old_cat_name" class="form-control" name="old_cat_name" value="<?php echo $toysCategoryModel->cat_name ?>" readonly="readonly"/>
+                                                        <br>
                                                         <label for="old_cat_desc">Deskripsi Kategori</label>
                                                         <textarea id="old_cat_desc" class="form-control" name="old_cat_desc" readonly><?php echo $toysCategoryModel->cat_desc ?></textarea>
                                                     </div>
@@ -115,6 +116,7 @@
                                                     <div class="x_content">
                                                         <label for="new_cat_name">Nama Kategori</label>
                                                         <input type="text" id="new_cat_name" class="form-control" name="new_cat_name" value="<?php echo $toysCategoryModel->cat_name ?>" readonly="readonly"/>
+                                                        <br>
                                                         <label for="new_cat_desc">Deskripsi Kategori</label>
                                                         <textarea id="new_cat_desc" class="form-control" name="new_cat_desc" readonly><?php echo $toysCategoryModel->cat_desc ?></textarea>
                                                     </div>
@@ -144,7 +146,6 @@
 <script>
     function setNewParamForUpdate()
     {
-        // $('#updateModal').modal('show'); 
         if(!document.getElementById("cat_name").value == null || 
             !document.getElementById("cat_name").value == "")
         {
