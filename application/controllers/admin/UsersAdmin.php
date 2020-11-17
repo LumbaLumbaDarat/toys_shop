@@ -3,9 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class UsersAdmin extends CI_Controller {
 
+	public function __construct()
+    {
+        parent::__construct();
+        if($this->utilityModel->isNotLoginOrEndSession())
+			return redirect('admin/login');
+	}
+	
 	public function index()
 	{
-		$dataHeader['title'] = "Users Admin";
+		$dataHeader = $this->utilityModel->dataHeader('Users Admin');
 
 		$usersAdminModelArray = array();
 		$usersAdminModel = $this->usersAdminModel->getData()->result();
@@ -65,7 +72,7 @@ class UsersAdmin extends CI_Controller {
 			];
 		}
 
-		$dataHeader['title'] = "Users Admin";
+		$dataHeader = $this->utilityModel->dataHeader('Users Admin');
 		$data['usersRoleModel'] = $this->usersRoleModel->getData()->result();
 		$data['sexTypeModel'] = $this->utilityModel->getSex();
 
@@ -95,7 +102,7 @@ class UsersAdmin extends CI_Controller {
 			'address' 	   => $address,
 			'password'     => $this->utilityModel->setDefaultPasswordUserAdmin(),
 			'created_date' => $this->utilityModel->sysDate('DATE_TIME'),
-			'created_by'   => 'Admin'
+			'created_by'   => $this->session->userdata('user_data')->email
 			);
 
 		$this->usersAdminModel->insertData($data);
@@ -139,7 +146,7 @@ class UsersAdmin extends CI_Controller {
 				$data = array(
 						'address'      => $address,
 						'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
-						'updated_by'   => 'Admin'
+						'updated_by'   => $this->session->userdata('user_data')->email
 					);
 				$this->usersAdminModel->updateData($id, $data);
 				
@@ -169,7 +176,7 @@ class UsersAdmin extends CI_Controller {
 					$data = array(
 						'photo_profile'=> $this->upload->data('file_name'),
 						'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
-						'updated_by'   => 'Admin'
+						'updated_by'   => $this->session->userdata('user_data')->email
 						);
 				}
 
@@ -218,7 +225,7 @@ class UsersAdmin extends CI_Controller {
 							'address'      => $address,
 							'photo_profile'=> $this->upload->data('file_name'),
 							'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
-							'updated_by'   => 'Admin'
+							'updated_by'   => $this->session->userdata('user_data')->email
 							);
 					}
 				}else $data = array(
@@ -228,7 +235,7 @@ class UsersAdmin extends CI_Controller {
 							'birthday'     => $birthday,
 							'address'      => $address,
 							'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
-							'updated_by'   => 'Admin'
+							'updated_by'   => $this->session->userdata('user_data')->email
 							);
 
 				$this->usersAdminModel->updateData($id, $data);
@@ -252,7 +259,7 @@ class UsersAdmin extends CI_Controller {
 					$data = array(
 						'password' 	   => $this->utilityModel->hashPassword($newPassword),
 						'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
-						'updated_by'   => 'Admin'
+						'updated_by'   => $this->session->userdata('user_data')->email
 						);
 					
 					$this->usersAdminModel->updateData($id, $data);
@@ -270,7 +277,7 @@ class UsersAdmin extends CI_Controller {
 				$data = array(
 					'password'     => $this->utilityModel->setDefaultPasswordUserAdmin(),
 					'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
-					'updated_by'   => 'Admin'
+					'updated_by'   => $this->session->userdata('user_data')->email
 				);
 
 				$this->usersAdminModel->updateData($id, $data);
@@ -304,7 +311,7 @@ class UsersAdmin extends CI_Controller {
 
 	public function profil()
 	{
-		$usersAdminModel = $this->usersAdminModel->getDataWhere('id', 86);
+		$usersAdminModel = $this->usersAdminModel->getDataWhere('id', $this->session->userdata('user_data')->id);
 		$newUsersAdminModel = new stdClass;
 		$newUsersAdminModel->id = $usersAdminModel->id;
 		$newUsersAdminModel->name = $usersAdminModel->name;
@@ -324,7 +331,7 @@ class UsersAdmin extends CI_Controller {
 		$newUsersAdminModel->updated_date = $this->utilityModel->checkParamIsEmpty('DATETIME', $usersAdminModel->updated_date);
 		$newUsersAdminModel->updated_by = $this->utilityModel->checkParamIsEmpty('STRING', $usersAdminModel->updated_by);
 
-		$dataHeader['title'] = "Users Admin";
+		$dataHeader = $this->utilityModel->dataHeader('Users Admin');
 		$data = [
 			'usersAdminModel' => $newUsersAdminModel,
 			'base_url' => "admin/usersadmin/update"
@@ -337,8 +344,8 @@ class UsersAdmin extends CI_Controller {
 
 	public function password()
 	{
-		$dataHeader['title'] = "Users Admin";
-		$data['usersAdminModel'] = $this->usersAdminModel->getDataWhere('id', 86);
+		$dataHeader = $this->utilityModel->dataHeader('Users Admin');
+		$data['usersAdminModel'] = $this->usersAdminModel->getDataWhere('id', $this->session->userdata('user_data')->id);
 
 		$this->load->view('admin/header', $dataHeader);
 		$this->load->view('admin/user_admin/password', $data);

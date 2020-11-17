@@ -33,7 +33,7 @@
                             <div class="profile_img">
                                 <div id="crop-avatar">
                                     <!-- Current avatar -->
-                                    <img class="img-thumbnail avatar-view edit-avatar" src="<?php echo base_url('assets/images/images_toys/'.$toysModel->toy_image) ?>" alt="Avatar" title="Sesuaikan Foto Mainan">
+                                    <img class="img-circle profile_img edit-avatar" src="<?php echo base_url('assets/images/images_toys/'.$toysModel->toy_image) ?>" alt="Avatar" title="Sesuaikan Foto Mainan" style="width:200px;height:200px;">
                                 </div>
                             </div>
                         </div>
@@ -147,8 +147,7 @@
                                                             <label for="old_toy_desc">Deskripsi Mainan</label>
                                                             <textarea id="old_toy_desc" class="form-control" name="old_toy_desc" readonly><?php echo $toysModel->toy_desc ?></textarea>
                                                             <br>
-                                                            <label for="old_toy_image">Foto Mainan</label>
-                                                            <img class="img-thumbnail avatar-view old-avatar" src="<?php echo base_url('assets/images/images_toys/'.$toysModel->toy_image) ?>" alt="Avatar" title="Foto Mainan Lama">
+                                                            <img class="img-circle profile_img old-avatar" src="<?php echo base_url('assets/images/images_toys/'.$toysModel->toy_image) ?>" alt="Avatar" title="Foto Mainan Lama" style="width:200px;height:200px;">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -187,8 +186,7 @@
                                                             <label for="new_toy_desc">Deskripsi Mainan</label>
                                                             <textarea id="new_toy_desc" class="form-control" name="new_toy_desc" readonly><?php echo $toysModel->toy_desc ?></textarea>
                                                             <br>
-                                                            <label for="old_toy_image">Foto Mainan</label>
-                                                            <img class="img-thumbnail avatar-view new-avatar" src="<?php echo base_url('assets/images/images_toys/'.$toysModel->toy_image) ?>" alt="Avatar" title="Foto Mainan Baru">
+                                                            <img class="img-circle profile_img new-avatar" src="<?php echo base_url('assets/images/images_toys/'.$toysModel->toy_image) ?>" alt="Avatar" title="Foto Mainan Baru" style="width:200px;height:200px;">
                                                         </div>
                                                     </div>
                                                 </div>

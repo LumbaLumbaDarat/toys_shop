@@ -3,9 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ToysCategory extends CI_Controller {
 
+	public function __construct()
+    {
+        parent::__construct();
+        if($this->utilityModel->isNotLoginOrEndSession())
+			return redirect('admin/login');
+	}
+	
     public function index()
 	{
-        $dataHeader['title'] = "Kategori Mainan";
+		$dataHeader = $this->utilityModel->dataHeader('Kategori Mainan');
         
         $toysCategoryModelArray = array();
         $toysCategoryModel = $this->toysCategoryModel->getData()->result();
@@ -51,7 +58,7 @@ class ToysCategory extends CI_Controller {
 			];
 		}
 
-		$dataHeader['title'] = "Kategori Mainan";
+		$dataHeader = $this->utilityModel->dataHeader('Kategori Mainan');
 		
 		$this->load->view('admin/header', $dataHeader);
 		$this->load->view('admin/toys_cat/form', $data);
@@ -67,7 +74,7 @@ class ToysCategory extends CI_Controller {
 			'cat_name'     => $catName,
 			'cat_desc' 	   => $catDesc,
 			'created_date' => $this->utilityModel->sysDate('DATE_TIME'),
-			'created_by'   => 'Admin'
+			'created_by'   => $this->session->userdata('user_data')->email
 			);
 
 		$this->toysCategoryModel->insertData($data);
@@ -90,7 +97,7 @@ class ToysCategory extends CI_Controller {
 			'cat_name'     => $catName,
 			'cat_desc'     => $catDesc,
 			'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
-			'updated_by'   => 'Admin'
+			'updated_by'   => $this->session->userdata('user_data')->email
 			);
 
 		$this->toysCategoryModel->updateData($id, $data);

@@ -3,9 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Toys extends CI_Controller {
 
+	public function __construct()
+    {
+        parent::__construct();
+        if($this->utilityModel->isNotLoginOrEndSession())
+			return redirect('admin/login');
+	}
+	
     public function index()
 	{
-        $dataHeader['title'] = "Mainan";
+		$dataHeader = $this->utilityModel->dataHeader('Mainan');
         
         $toysModelArray = array();
         $toysModel = $this->toysModel->getData()->result();
@@ -62,7 +69,7 @@ class Toys extends CI_Controller {
 			];
 		}
 
-		$dataHeader['title'] = "Kategori Mainan";
+		$dataHeader = $this->utilityModel->dataHeader('Mainan');
 		$data['toysCategoryModel'] = $this->toysCategoryModel->getData()->result();
 		
 		
@@ -98,7 +105,7 @@ class Toys extends CI_Controller {
 			'toy_desc'     => $toyDesc,
 			'toy_image'    => $imageNameBeforeUploadImage,
 			'created_date' => $this->utilityModel->sysDate('DATE_TIME'),
-			'created_by'   => 'Admin'
+			'created_by'   => $this->session->userdata('user_data')->email
 			);
 
 		$this->toysModel->insertData($data);
@@ -159,7 +166,7 @@ class Toys extends CI_Controller {
 					'toy_desc'     => $toyDesc,
 					'toy_image'    => $this->upload->data('file_name'),
 					'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
-					'updated_by'   => 'Admin'
+					'updated_by'   => $this->session->userdata('user_data')->email
 					);
 			}
 		}else $data = array(
@@ -169,7 +176,7 @@ class Toys extends CI_Controller {
 					'toy_price'    => $toyPrice,
 					'toy_desc'     => $toyDesc,
 					'updated_date' => $this->utilityModel->sysDate('DATE_TIME'),
-					'updated_by'   => 'Admin'
+					'updated_by'   => $this->session->userdata('user_data')->email
 					);
 
 		$this->toysModel->updateData($id, $data);

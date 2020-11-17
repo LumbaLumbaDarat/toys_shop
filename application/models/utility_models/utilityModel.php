@@ -129,4 +129,19 @@ class UtilityModel extends CI_model{
 			return "Laki-Laki";
 		else return "Perempuan";
 	}
+
+	public function isNotLoginOrEndSession()
+	{
+        return $this->session->userdata('user_data') === null;
+	}
+	
+	public function dataHeader($titleName)
+	{
+		$dataHeader = [
+			'title' 		  => $titleName,
+			'usersAdminModel' => $this->session->userdata('user_data') 
+		];
+
+		return $dataHeader;
+	}
 }

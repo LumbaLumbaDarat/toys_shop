@@ -169,7 +169,6 @@
 <script>
     function resetImg(oldImage)
     {
-        // alert(oldImage);
         document.querySelector('.edit-avatar').src = oldImage;
     }
 </script>

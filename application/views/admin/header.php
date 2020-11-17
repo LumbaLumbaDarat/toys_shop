@@ -77,11 +77,11 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="<?php echo base_url('assets/images/images_user_admin/admin_photo.png') ?>" alt="..." class="img-circle profile_img">
+                <img src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" class="img-circle profile_img" style="width:65px;height:65px;">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2><?php echo $usersAdminModel->name ?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -90,7 +90,7 @@
 
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
+              <div class="menu_section" <?php if($usersAdminModel->user_role == 'ADO') echo 'hidden' ?> >
                 <h3>Pemeliharaan User</h3>
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-users"></i> User Admin<span class="fa fa-chevron-down"></span></a>
@@ -131,7 +131,7 @@
                 <ul class="nav side-menu">
                   <li><a href="<?php echo base_url('admin/usersadmin/profil') ?>"><i class="fa fa-leaf"></i> Profile </a></li>
                   <li><a href="<?php echo base_url('admin/usersadmin/password') ?>"><i class="fa fa-key"></i> Ubah Password </a></li>
-                  <li><a href="#"><i class="fa fa-sign-out"></i> Log out </a></li>                
+                  <li><a href="<?php echo base_url('admin/login/logout') ?>"><i class="fa fa-sign-out"></i> Log out </a></li>                
                 </ul>
               </div>
 
@@ -156,12 +156,12 @@
               <ul class=" navbar-right">
                 <li class="nav-item dropdown open" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    <img src="<?php echo base_url('assets/images/images_user_admin/admin_photo.png') ?>" alt="">John Doe
+                    <img src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt=""><?php echo $usersAdminModel->name ?>
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item"  href="<?php echo base_url('admin/usersadmin/profil') ?>"> Profile </a>
                     <a class="dropdown-item"  href="<?php echo base_url('admin/usersadmin/password') ?>"> Ubah Password </a>
-                    <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out </a>
+                    <a class="dropdown-item"  href="<?php echo base_url('admin/login/logout') ?>"><i class="fa fa-sign-out pull-right"></i> Log Out </a>
                   </div>
                 </li>
 

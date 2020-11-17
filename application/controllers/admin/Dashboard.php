@@ -3,6 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
 
+	public function __construct()
+    {
+        parent::__construct();
+        if($this->utilityModel->isNotLoginOrEndSession())
+			return redirect('admin/login');
+	}
+
 	public function index()
 	{
 		$simpleReportArray = array();
@@ -33,12 +40,13 @@ class Dashboard extends CI_Controller {
 
 		array_push($simpleReportArray, $simpleReportModel);
 
+		$dataHeader['usersAdminModel'] = $this->session->userdata('user_data');
 		$data = [
 			'simpleReportModel'    		  => $simpleReportArray,
 			'lastInquiry'    			  => $this->utilityModel->converterMonthNameForDateTime('DATE_TIME', $this->utilityModel->sysDate('DATE_TIME'))
 		];
 
-		$this->load->view('admin/header');
+		$this->load->view('admin/header', $dataHeader);
 		$this->load->view('admin/dashboard', $data);
 		$this->load->view('admin/footer');
 	}
