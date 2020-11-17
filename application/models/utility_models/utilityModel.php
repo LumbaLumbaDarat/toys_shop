@@ -84,7 +84,7 @@ class UtilityModel extends CI_model{
 			case 'DATE_TIME':
 					return date('Y-m-d H:i:s');
 			  break;
-		  }
+		}
 	}
 
 	public function setDefaultPasswordUserAdmin()
@@ -95,6 +95,13 @@ class UtilityModel extends CI_model{
 	public function hashPassword($pass_user) 
 	{
 		return password_hash($pass_user, PASSWORD_BCRYPT);
+	}
+
+	public function passwordVerify($inputPassword, $passwordFromDatabase) 
+	{
+		if(password_verify($inputPassword, $passwordFromDatabase))
+			return true;
+		else return false;
 	}
 
 	public function getSex() 

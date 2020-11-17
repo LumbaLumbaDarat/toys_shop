@@ -3,18 +3,15 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                    <!-- <div class="alert alert-success alert-dismissible " role="alert">
+                <?php if($this->session->flashdata('message')) : 
+                        $messages = explode('|', $this->session->flashdata('message'));
+                        $alert = trim($messages[0], ' ');
+                        $message = trim($messages[1], ' ');
+                    ?>
+                    <div class="alert <?php echo $alert; ?> alert-dismissible " role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                         </button>
-                        <strong>Penambahan Data User Admin berhasil dilakukan !</strong> 
-                        <br>
-                        Data User Admin baru, <strong>Data Berhasil ditambahkan !</strong> berhasil ditambahkan !
-                    </div> -->
-                <?php if($this->session->flashdata('message')) : ?>
-                    <div class="alert alert-success alert-dismissible " role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                        </button>
-                        <?php echo $this->session->flashdata('message');?>
+                        <?php echo $message; ?>
                     </div>
                 <?php endif ?>
             </div>
@@ -91,8 +88,8 @@
                                                                     Aksi
                                                                     </button>
                                                                     <div class="dropdown-menu">
-                                                                        <form role="form" action="<?php echo base_url('admin/usersadmin/detail')?>" method="post">
-                                                                            <input type="hidden" name="id_detail" value="<?php echo $usersAdmin->id; ?>">
+                                                                        <form role="form" action="<?php echo base_url('admin/usersadmin/update')?>" method="post">
+                                                                            <input type="hidden" name="id" value="RESET_PASSWORD | <?php echo $usersAdmin->id; ?>">
                                                                             <button type="submit" class="dropdown-item btn-primary">
                                                                                 <i class="fa fa-key"></i> Reset Password
                                                                             </button>

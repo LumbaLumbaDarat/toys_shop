@@ -129,8 +129,8 @@
               <div class="menu_section">
                 <h3>Pengaturan</h3>
                 <ul class="nav side-menu">
-                  <li><a href="#"><i class="fa fa-leaf"></i> Profile </a></li>
-                  <li><a href="#"><i class="fa fa-key"></i> Ubah Password </a></li>
+                  <li><a href="<?php echo base_url('admin/usersadmin/profil') ?>"><i class="fa fa-leaf"></i> Profile </a></li>
+                  <li><a href="<?php echo base_url('admin/usersadmin/password') ?>"><i class="fa fa-key"></i> Ubah Password </a></li>
                   <li><a href="#"><i class="fa fa-sign-out"></i> Log out </a></li>                
                 </ul>
               </div>
@@ -159,8 +159,8 @@
                     <img src="<?php echo base_url('assets/images/images_user_admin/admin_photo.png') ?>" alt="">John Doe
                   </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item"  href="javascript:;"> Profile </a>
-                    <a class="dropdown-item"  href="javascript:;"> Ubah Password </a>
+                    <a class="dropdown-item"  href="<?php echo base_url('admin/usersadmin/profil') ?>"> Profile </a>
+                    <a class="dropdown-item"  href="<?php echo base_url('admin/usersadmin/password') ?>"> Ubah Password </a>
                     <a class="dropdown-item"  href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out </a>
                   </div>
                 </li>

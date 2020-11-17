@@ -33,7 +33,7 @@
                             <div class="profile_img">
                                 <div id="crop-avatar">
                                     <!-- Current avatar -->
-                                    <img class="img-thumbnail avatar-view edit-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Sesuaikan Foto User Admin">
+                                    <img class="img-circle profile_img edit-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Sesuaikan Foto User Admin" style="width:200px;height:200px;">
                                 </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="field item form-group">
                                     <div class="col-md-6 col-sm-6">
-                                        <input class="form-control" class='id' name="id" value="<?php echo $usersAdminModel->id ?>" hidden/>
+                                        <input class="form-control" class='id' name="id" value="EDIT_GENERAL_VIA_EDIT | <?php echo $usersAdminModel->id ?>" hidden/>
                                     </div>
                                 </div>
                                 <div class="field item form-group">
@@ -171,7 +171,6 @@
                                                             <label for="old_name">Nama User Admin</label>
                                                             <input type="text" id="old_name" class="form-control" name="old_name" value="<?php echo $usersAdminModel->name ?>" readonly="readonly"/>
                                                             <br>
-                                                            
                                                             <label for="old_email">Email User Admin</label>
                                                             <input type="text" id="old_email" class="form-control" name="old_email" value="<?php echo $usersAdminModel->email ?>" readonly="readonly"/>
                                                             <br>
@@ -187,8 +186,7 @@
                                                             <label for="old_user_role">User Admin sebagai</label>
                                                             <input type="text" id="old_user_role" class="form-control" name="old_user_role" value="<?php echo $oldUserAdminRole ?>" readonly="readonly"/>
                                                             <br>
-                                                            <label for="old_user_role">Foto Profil</label>
-                                                            <img class="img-thumbnail avatar-view old-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Foto User Admin Lama">
+                                                            <img class="img-circle profile_img old-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Foto User Admin Lama" style="width:200px;height:200px;">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -230,8 +228,7 @@
                                                             <label for="new_user_role">User Admin sebagai</label>
                                                             <input type="text" id="new_user_role" class="form-control" name="new_user_role" readonly="readonly"/>
                                                             <br>
-                                                            <label for="new_photo_profile">Foto Profil</label>
-                                                            <img class="img-thumbnail avatar-view new-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Foto User Admin Baru">
+                                                            <img class="img-circle profile_img new-avatar" src="<?php echo base_url('assets/images/images_user_admin/'.$usersAdminModel->photo_profile) ?>" alt="Avatar" title="Foto User Admin Baru" style="width:200px;height:200px;">
                                                         </div>
                                                     </div>
                                                 </div>

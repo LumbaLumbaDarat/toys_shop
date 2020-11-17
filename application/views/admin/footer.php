@@ -110,6 +110,9 @@
     <script src="<?php echo base_url('assets/admin_template/vendors/moment/min/moment.min.js') ?>"></script>
     <script src="<?php echo base_url('assets/admin_template/vendors/bootstrap-daterangepicker/daterangepicker.js') ?>"></script>
 
+    <!-- Dropzone.js -->
+    <script src="<?php echo base_url('assets/admin_template/vendors/dropzone/dist/min/dropzone.min.js') ?>"></script>
+
     <!-- Custom Theme Scripts -->
     <script src="<?php echo base_url('assets/admin_template/build/js/custom.min.js') ?>"></script>
 
