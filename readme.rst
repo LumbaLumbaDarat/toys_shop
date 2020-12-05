@@ -37,6 +37,13 @@ Database
 ###################
 - MariaDB 10.4.11 https://www.apachefriends.org/blog/new_xampp_20200423.html, https://mariadb.org/
 
+###################
+Testing Tools
+###################
+- Google Chrome https://www.google.com/chrome/?brand=FHFK&gclid=EAIaIQobChMI0byNsMe37QIVQWoqCh0pLw6_EAAYASAAEgJe9vD_BwE&gclsrc=aw.ds
+
+
+
 
 ###################
 What is CodeIgniter
