@@ -133,8 +133,13 @@ $autoload['language'] = array();
 |	$autoload['model'] = array('first_model' => 'first');
 */
 $autoload['model'] = array(
-    'utility_models/utilityModel', 
+    'utility_models/utilityModel',
+    'utility_models/messageModel', 
     'admin/usersAdminModel', 
     'admin/usersRoleModel', 
     'admin/toysCategoryModel',
-    'admin/toysModel');
+    'admin/toysModel', 
+    'client/cartModel',
+    'client/detailTransactionModel',
+    'client/transactionModel',
+    'client/usersClientModel');

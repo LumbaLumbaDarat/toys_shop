@@ -19,16 +19,30 @@ class UtilityModel extends CI_model{
 		switch ($typeReport) {
 			case 'COUNT_DATA':
 					return $this->db->count_all_results($tableName);
-			  break;
+			break;
 			case 'COUNT_TODAY_DATA':
 					return $this->db->simple_query('SELECT count(*) AS today FROM '.$tableName.' WHERE `created_date` >= CURDATE()')->fetch_assoc()['today'];
-			  break;
+			break;
+			case 'COUNT_ACTIVE_USER_CART':
+				$datas = explode('|', $tableName);
+				$newTableName = trim($datas[0], ' ');
+				$idUserInCart = trim($datas[1], ' ');
+
+				return $this->db->simple_query('SELECT count(*) AS data_cart FROM '.$newTableName.' WHERE `id_user` = '.$idUserInCart.' AND `state_cart` = \'N\'')->fetch_assoc()['data_cart'];
+			break;
+			case 'COUNT_ACTIVE_TOY_CART':
+				$datas = explode('|', $tableName);
+				$newTableName = trim($datas[0], ' ');
+				$idToyInCart = trim($datas[1], ' ');
+				
+				return $this->db->simple_query('SELECT sum(`quantity`) AS data_cart FROM '.$newTableName.' WHERE `id_toy` = '.$idToyInCart.' AND `state_cart` = \'N\'')->fetch_assoc()['data_cart'];
+		    break;
 			case 'LAST_INSERTED_DATA':
 					$this->db->select_max('id');
 					$resultLastData = $this->db->get($tableName)->result();
 			
 					return $this->db->get_where($tableName, ['id' => $resultLastData[0]->id])->row();
-			  break;
+			break;
 			case 'LAST_INSERTED_DATE':
 				$this->db->select_max('id');
 				$resultLastData = $this->db->get($tableName)->result();
@@ -77,13 +91,13 @@ class UtilityModel extends CI_model{
 		switch ($type) {
 			case 'DATE':
 					return date('Y-m-d');
-			  break;
+			break;
 			case 'TIME':
 					return date('H:i:s');
-			  break;
+			break;
 			case 'DATE_TIME':
 					return date('Y-m-d H:i:s');
-			  break;
+			break;
 		}
 	}
 
@@ -137,11 +151,157 @@ class UtilityModel extends CI_model{
 	
 	public function dataHeader($titleName)
 	{
+		$arrayWhere = array(
+			'message_to' => 'ADO',
+            'read_by'    => null
+        );
+
+		$countMessage = 0;
+        $messageModelArray = array();
+        $messageModel = $this->messageModel->getDataWhereArray($arrayWhere);
+        foreach($messageModel as $message)
+        {
+			$countMessage++;
+            $newMessageModel = new stdClass;
+            $newMessageModel->id                = $message->id;
+            $newMessageModel->message_from      = $message->message_from;
+            $newMessageModel->message_to_string = $this->utilityModel->messageTo($message->message_to);
+            $newMessageModel->subject           = $message->subject;
+            $newMessageModel->created_date      = $this->utilityModel->converterMonthNameForDateTime('DATE_TIME', $message->created_date);
+            $newMessageModel->read_by           = $this->utilityModel->checkParamIsEmpty('STRING', $message->read_by);
+            $newMessageModel->read_date         = $this->utilityModel->converterMonthNameForDateTime('DATE_TIME', $message->read_date);
+
+            array_push($messageModelArray, $newMessageModel);
+		}
+		
 		$dataHeader = [
 			'title' 		  => $titleName,
+			'countMessage'	  => $countMessage,
+			'messageModel'	  => $messageModelArray,
 			'usersAdminModel' => $this->session->userdata('user_data') 
 		];
 
 		return $dataHeader;
+	}
+
+	public function isClientNotLoginOrEndSession()
+	{
+        return $this->session->userdata('client_data') === null;
+	}
+
+	public function dataHeaderCart()
+	{
+		$dataHeader;
+		if($this->isClientNotLoginOrEndSession())
+		{
+			$dataHeader = [
+				'cartModel' 		   => '',
+				'cartSum'			   => '',
+				'cartSumString' 	   => '',
+				'cartCount' 		   => '',
+				'base_url_delete_cart' => '',
+				'icon' 				   => 'icon_name.png'
+			];
+		}else{
+			$usersClientModel = $this->session->userdata('client_data');
+
+			$cartModelArray = array();
+			$cartSumArray = array();
+			$arrayWhere = array('id_user' => $usersClientModel->id, 'state_cart' => 'N');
+			$cartModel = $this->cartModel->getDataCartWithStatus($arrayWhere);
+			foreach($cartModel as $cart)
+			{ 
+				$newCartModel = new stdClass;
+				$newCartModel->id = $cart->id;
+				$newCartModel->id_user = $cart->id_user;
+				$newCartModel->id_toy = $cart->id_toy;
+
+				$newToysModel = $this->toysModel->getDataWhere('id', $cart->id_toy);
+
+				$newCartModel->toy_image = $newToysModel->toy_image;
+				$newCartModel->toy_name = $cart->toy_name;
+				$newCartModel->toy_price = $cart->toy_price;
+				$newCartModel->toy_price_string = $this->utilityModel->converterCurrencyIDR($cart->toy_price);
+				$newCartModel->quantity = $cart->quantity;
+				$newCartModel->state_cart = $cart->state_cart;
+				$newCartModel->created_date = $this->utilityModel->converterMonthNameForDateTime('DATE_TIME', $cart->created_date);
+			
+				$subTotal = $cart->quantity * $cart->toy_price;
+
+				$newCartModel->sub_total = $subTotal;
+				$newCartModel->sub_total_string = $this->utilityModel->converterCurrencyIDR($subTotal);
+				
+				array_push($cartSumArray, $subTotal);
+				array_push($cartModelArray, $newCartModel);
+			}
+
+			$arrayWhere = array(
+				'message_to' => $usersClientModel->email,
+				'read_by'    => null
+			);
+	
+			$countMessage = 0;
+			$messageModel = $this->messageModel->getDataWhereArray($arrayWhere);
+			foreach($messageModel as $message)
+			{
+				$countMessage++;
+			}
+
+			$dataHeader = [
+				'cartModel' 		   => $cartModelArray,
+				'cartSum' 			   => array_sum($cartSumArray),
+				'cartSumString' 	   => $this->utilityModel->converterCurrencyIDR(array_sum($cartSumArray)),
+				'cartCount' 		   => $this->cartModel->simpleReport('COUNT_ACTIVE_USER_CART', $usersClientModel->id),
+				'countMessage' 		   => $countMessage++,
+				'base_url_delete_cart' => 'client/cart/delete',
+				'icon' 			       => 'icon_name.png'
+			];
+		}
+		
+		return $dataHeader;
+	}
+
+	public function dataFooterClient()
+	{
+        $dataFooter = [
+            'icon' => 'icon_light.png'
+		];
+		
+		return $dataFooter;
+	}
+
+	public function transactionStatus($status) 
+	{
+		if($status == "N")
+			return "Menunggu";
+		else return "Sudah";
+	}
+
+	public function messageTo($messageTo) 
+	{
+		if($messageTo == "ADO")
+			return "Admin Operator";
+		else return $messageTo;
+	}
+
+	public function createDefaultAdmin(){
+
+		if($this->usersAdminModel->simpleReport('COUNT_DATA') == 0)
+		{
+			$data = array(
+				'user_role'    => 'ADM',
+				'name' 		   => 'Admin Master',
+				'email' 	   => 'admin@email.com',
+				'sex' 	   	   => 'L',
+				'birthday' 	   => $this->utilityModel->sysDate('DATE_TIME'),
+				'address' 	   => 'Admin ini digenerate oleh sistem, saat Aplikasi pertama kali di Install sebagai Admin Master.',
+				'photo_profile'=> 'admin_photo.png',
+				'password'     => $this->utilityModel->setDefaultPasswordUserAdmin(),
+				'created_date' => $this->utilityModel->sysDate('DATE_TIME'),
+				'created_by'   => 'SYSTEM'
+				);
+	
+			$this->usersAdminModel->insertData($data);
+		}
 	}
 }

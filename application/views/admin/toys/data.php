@@ -111,30 +111,6 @@
                                                                         </button>
                                                                     </div>
                                                                 </div>
-                                                                <!-- <div class="col-xs-2 ">
-                                                                <form role="form" action="<?php echo base_url('dashboard/toyscategory/detail')?>" method="post">
-                                                                    <input type="hidden" name="id_detail" value="<?php echo $toys->id; ?>">
-                                                                    <button type="submit" class="btn btn-social-icon btn-info">
-                                                                        <i class="fa fa-search"></i>
-                                                                    </button>
-                                                                </form>
-                                                                </div>
-                                                                <div class="col-xs-2 ">
-                                                                <form role="form" action="<?php echo base_url('admin/toyscategory/form')?>" method="post">
-                                                                    <input type="hidden" name="id_update" value="<?php echo $toys->id; ?>">
-                                                                    <button type="submit" class="btn btn-social-icon btn-warning">
-                                                                        <i class="fa fa-edit"></i>
-                                                                    </button>
-                                                                </form>
-                                                                </div>
-                                                                <div class="col-xs-2 ">
-                                                                <form role="form" action="<?php echo base_url('admin/toyscategory/delete')?>" method="post">
-                                                                    <input type="hidden" name="id_delete" value="<?php echo $toys->id; ?>">
-                                                                    <button type="submit" class="btn btn-social-icon btn-danger" onclick="return confirm('Apakah Anda Yakin ingin menghapus data ini ?')">
-                                                                        <i class="fa fa-trash"></i>
-                                                                    </button>
-                                                                </form>
-                                                                </div> -->
                                                             </td>
                                                         </tr>
                                                     <?php }} ?>

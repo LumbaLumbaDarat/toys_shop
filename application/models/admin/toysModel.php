@@ -15,6 +15,11 @@ class ToysModel extends CI_model{
 		return $this->db->get_where($this->tableToys, [$paramWhere => $paramValue])->row();
 	}
 
+	public function getDataWhereAll($paramWhere, $paramValue)
+	{
+		return $this->db->get_where($this->tableToys, [$paramWhere => $paramValue])->result();
+	}
+
 	public function insertData($data)
 	{
 		$this->db->insert($this->tableToys, $data);

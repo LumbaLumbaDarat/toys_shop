@@ -99,7 +99,7 @@
                       <li><a href="<?php echo base_url('admin/usersadmin/form') ?>">Tambah User Admin</a></li>
                     </ul>
                   </li>
-                  <li><a href="<?php echo base_url('admin/usersadmin/') ?>"><i class="fa fa-users"></i> Client</a></li>
+                  <li><a href="<?php echo base_url('admin/usersclient/') ?>"><i class="fa fa-users"></i> Client</a></li>
                 </ul>
               </div>
               <div class="menu_section">
@@ -122,18 +122,18 @@
               <div class="menu_section">
                 <h3>Pemeliharaan Transaksi</h3>
                 <ul class="nav side-menu">
-                  <li><a href="#"><i class="fa fa-shopping-cart"></i> Keranjang Belanja </a></li>
-                  <li><a href="#"><i class="fa fa-credit-card"></i> Sejarah Transaksi </a></li>             
+                  <li><a href="<?php echo base_url('admin/cart/') ?>"><i class="fa fa-shopping-cart"></i> Keranjang Belanja </a></li>
+                  <li><a href="<?php echo base_url('admin/transaction/') ?>"><i class="fa fa-credit-card"></i> Riwayat Transaksi </a></li>             
                 </ul>
               </div>
-              <div class="menu_section">
+              <!-- <div class="menu_section">
                 <h3>Pengaturan</h3>
                 <ul class="nav side-menu">
                   <li><a href="<?php echo base_url('admin/usersadmin/profil') ?>"><i class="fa fa-leaf"></i> Profile </a></li>
                   <li><a href="<?php echo base_url('admin/usersadmin/password') ?>"><i class="fa fa-key"></i> Ubah Password </a></li>
                   <li><a href="<?php echo base_url('admin/login/logout') ?>"><i class="fa fa-sign-out"></i> Log out </a></li>                
                 </ul>
-              </div>
+              </div> -->
 
             </div>
             <!-- /sidebar menu -->
@@ -168,60 +168,27 @@
                 <li role="presentation" class="nav-item dropdown open">
                   <a href="javascript:;" class="dropdown-toggle info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
+                    <span class="badge bg-green" <?php if($countMessage == 0) echo 'hidden'; ?>><?php echo $countMessage; ?></span>
                   </a>
                   <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="dropdown-item">
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
+                    <?php 
+                    if($messageModel){
+                        $id = 1;
+                    foreach($messageModel as $message) { ?>
+                      <li class="nav-item">
+                        <a class="dropdown-item">
+                          <span>
+                            <span><strong><?php echo $message->message_from; ?></strong></span>
+                          </span>
+                          <span class="message">
+                            <?php echo $message->subject; ?>
+                          </span>
+                        </a>
+                      </li>
+                    <?php }} ?>
                     <li class="nav-item">
                       <div class="text-center">
-                        <a class="dropdown-item">
+                        <a class="dropdown-item" href="<?php echo base_url('admin/message/')?>">
                           <strong>See All Alerts</strong>
                           <i class="fa fa-angle-right"></i>
                         </a>

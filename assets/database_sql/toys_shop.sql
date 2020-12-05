@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2020 at 04:53 PM
+-- Generation Time: Dec 06, 2020 at 12:25 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -20,6 +20,41 @@ SET time_zone = "+00:00";
 --
 -- Database: `toys_shop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_toy` int(11) NOT NULL,
+  `toy_name` text NOT NULL,
+  `toy_price` decimal(10,0) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `state_cart` varchar(3) NOT NULL,
+  `created_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message`
+--
+
+CREATE TABLE `message` (
+  `id` int(11) NOT NULL,
+  `message_from` varchar(100) NOT NULL,
+  `message_to` varchar(100) NOT NULL,
+  `subject` text NOT NULL,
+  `attachment` text DEFAULT NULL,
+  `body` text NOT NULL,
+  `read_by` varchar(100) DEFAULT NULL,
+  `created_date` datetime NOT NULL,
+  `read_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -41,14 +76,6 @@ CREATE TABLE `toys` (
   `updated_by` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `toys`
---
-
-INSERT INTO `toys` (`id`, `id_cat`, `toy_name`, `toy_image`, `toy_quantity`, `toy_price`, `toy_desc`, `created_date`, `created_by`, `updated_date`, `updated_by`) VALUES
-(17, 10, 'Hotwheels', 'Kj3HaAVlnBkzXCZl8seSYUgL7P7xNo4ARGzn9kwXBtDNqThFVMMi9165OHLvEUfC.jpg', 5, '25000', 'Hotwheels', '2020-11-18 01:28:52', 'kangbahar@gmail.com', '2020-11-18 01:29:59', 'lumba.lumbadrt@gmail.com'),
-(18, 10, 'Kuda-kudaan', 'C8MxYYHbnvfxP5o1tKkHbIAXC8yRBd2n1KpDihFgjWu0Ww3OfJ5SPcZRF9mOJkvz.jpg', 12, '200000', 'Kuda-kudaan', '2020-11-18 16:30:30', 'kangbahar@gmail.com', NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -66,13 +93,39 @@ CREATE TABLE `toys_category` (
   `updated_by` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `toys_category`
+-- Table structure for table `transaction_detail`
 --
 
-INSERT INTO `toys_category` (`id`, `cat_name`, `cat_desc`, `cat_image`, `created_date`, `created_by`, `updated_date`, `updated_by`) VALUES
-(10, 'Mainan Balita', 'Mainan Balita / Anak-anak', NULL, '2020-11-18 01:25:35', 'lumba.lumbadrt@gmail.com', '2020-11-18 01:54:23', 'lumba.lumbadrt@gmail.com'),
-(11, 'Mainan Anak-anak', 'Mainan Anak-anak', NULL, '2020-11-18 16:38:45', 'kangbahar@gmail.com', NULL, NULL);
+CREATE TABLE `transaction_detail` (
+  `id` int(11) NOT NULL,
+  `id_trx_hist` int(11) NOT NULL,
+  `id_toy` int(11) NOT NULL,
+  `toy_name` text NOT NULL,
+  `toy_price` decimal(10,0) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `sub_total` decimal(10,0) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction_hist`
+--
+
+CREATE TABLE `transaction_hist` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `ref_no` varchar(50) NOT NULL,
+  `total_payment` decimal(10,0) NOT NULL,
+  `is_payment` varchar(3) NOT NULL,
+  `is_received` varchar(3) NOT NULL,
+  `transaction_date` datetime NOT NULL,
+  `payment_date` datetime DEFAULT NULL,
+  `received_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -96,13 +149,28 @@ CREATE TABLE `user_admin` (
   `updated_by` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `user_admin`
+-- Table structure for table `user_client`
 --
 
-INSERT INTO `user_admin` (`id`, `user_role`, `name`, `email`, `password`, `sex`, `birthday`, `address`, `photo_profile`, `created_date`, `created_by`, `updated_date`, `updated_by`) VALUES
-(85, 'ADM', 'Arif Rizki Hidayat', 'lumba.lumbadrt@gmail.com', '$2y$10$KiRMOmUMiCD09J9ZG8r40u3X3yK4a8d6KoG.MdZuA/tJWch91DNLy', 'L', '1993-04-17', 'Jl. Kemuning Dalam 6 Utan Kayu', 'vZ3YylsS8sDiaciL6EUoXW19qRvVNMcpqnNYeABjw0tR2u2Qrf1TIg7VJWBp4uDL.jpg', '2020-11-16 21:38:32', 'Admin', NULL, NULL),
-(86, 'ADO', 'Kang Bahar Aja', 'kangbahar@gmail.com', '$2y$10$Bk3Le5hFTpGPAoFdcW6Oe.KIvpmmrk8l0naX7iURW/6qAYKsi2h3q', 'L', '1974-01-20', 'Jalan Kahuripan 11 Bandung Selatan', '2iRgr3Wpf7XsmP4OYoBhdybHtIcpd8QUbvEZ1fxlJukLCATZr65xJ0lwkOK9s24H.jpg', '2020-11-16 21:39:38', 'Admin', '2020-11-18 01:35:10', 'lumba.lumbadrt@gmail.com');
+CREATE TABLE `user_client` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `address` text NOT NULL,
+  `sub_district` text NOT NULL,
+  `district` text NOT NULL,
+  `city` text NOT NULL,
+  `postal` varchar(10) NOT NULL,
+  `password` text NOT NULL,
+  `created_date` datetime NOT NULL,
+  `created_by` varchar(100) NOT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  `updated_by` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -128,6 +196,18 @@ INSERT INTO `user_role` (`role_code`, `role_name`) VALUES
 --
 
 --
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `message`
+--
+ALTER TABLE `message`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `toys`
 --
 ALTER TABLE `toys`
@@ -142,12 +222,32 @@ ALTER TABLE `toys_category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `transaction_detail`
+--
+ALTER TABLE `transaction_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `transaction_hist`
+--
+ALTER TABLE `transaction_hist`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ref_no` (`ref_no`);
+
+--
 -- Indexes for table `user_admin`
 --
 ALTER TABLE `user_admin`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD KEY `user_role` (`user_role`);
+
+--
+-- Indexes for table `user_client`
+--
+ALTER TABLE `user_client`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `user_role`
@@ -158,6 +258,18 @@ ALTER TABLE `user_role`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `message`
+--
+ALTER TABLE `message`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `toys`
@@ -172,10 +284,28 @@ ALTER TABLE `toys_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `transaction_detail`
+--
+ALTER TABLE `transaction_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `transaction_hist`
+--
+ALTER TABLE `transaction_hist`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `user_admin`
 --
 ALTER TABLE `user_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+
+--
+-- AUTO_INCREMENT for table `user_client`
+--
+ALTER TABLE `user_client`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

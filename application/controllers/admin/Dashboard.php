@@ -40,7 +40,7 @@ class Dashboard extends CI_Controller {
 
 		array_push($simpleReportArray, $simpleReportModel);
 
-		$dataHeader['usersAdminModel'] = $this->session->userdata('user_data');
+		$dataHeader = $this->utilityModel->dataHeader('');
 		$data = [
 			'simpleReportModel'    		  => $simpleReportArray,
 			'lastInquiry'    			  => $this->utilityModel->converterMonthNameForDateTime('DATE_TIME', $this->utilityModel->sysDate('DATE_TIME'))

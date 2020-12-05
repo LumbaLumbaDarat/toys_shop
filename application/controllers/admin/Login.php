@@ -5,6 +5,8 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
+		$this->utilityModel->createDefaultAdmin();
+
 		$dates = explode(' ', $this->utilityModel->converterMonthNameForDateTime('DATE', $this->utilityModel->sysDate('DATE')));
 		$month = trim($dates[1], ' ');
 		$year  = trim($dates[2], ' ');
