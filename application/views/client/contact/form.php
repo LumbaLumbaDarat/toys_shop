@@ -18,7 +18,7 @@
 								<form class="form" method="post" action="<?php echo base_url($base_url) ?>" enctype="multipart/form-data">
 									<div class="row">
 										<div class="col-12">
-											<div class="form-group message">
+											<div class="form-group message" hidden>
 												<input name="refNo" id="refNo" type="text" placeholder="" <?php if(!empty($messageModel->subject)) echo 'readonly'; ?> value="<?php echo $refNo ?>">
 											</div>
 										</div>

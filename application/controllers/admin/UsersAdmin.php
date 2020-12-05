@@ -125,7 +125,7 @@ class UsersAdmin extends CI_Controller {
 			$newUsersAdminModel = $this->usersAdminModel->getDataWhere('email', $email);
 
 			$this->usersAdminModel->updateData($newUsersAdminModel->id, $data);
-			$message = '<strong>Penambahan Data User Admin berhasil dilakukan !</strong>'.
+			$message = 'alert-success | <strong>Penambahan Data User Admin berhasil dilakukan !</strong>'.
 			'<br>'.
 			'Data User Admin baru, <strong>'.$name.'</strong> dengan Username <strong>'.$email.'</strong> berhasil ditambahkan !';
 		}
@@ -151,7 +151,8 @@ class UsersAdmin extends CI_Controller {
 				$this->usersAdminModel->updateData($id, $data);
 				
 				$message = 'alert-success | <strong>Perubahan Data Alamat berhasil dilakukan !</strong>';
-				
+
+				$this->utilityModel->updateSession($id);
 				$this->session->set_flashdata('message', $message);
 				return redirect('admin/usersadmin/profil');
 			break;
@@ -184,6 +185,7 @@ class UsersAdmin extends CI_Controller {
 				
 				$message = 'alert-success | <strong>Perubahan Foto Profil berhasil dilakukan !</strong>';
 				
+				$this->utilityModel->updateSession($id);
 				$this->session->set_flashdata('message', $message);
 				return redirect('admin/usersadmin/profil');
 			break;
@@ -244,6 +246,7 @@ class UsersAdmin extends CI_Controller {
 					'<br>'.
 					'Data User Admin, <strong>'.$name.'</strong> dengan Username <strong>'.$email.'</strong> berhasil diubah !';
 
+				$this->utilityModel->updateSession($id);
 				$this->session->set_flashdata('message', $message);
 				return redirect('admin/usersadmin');
 			break;
@@ -301,7 +304,7 @@ class UsersAdmin extends CI_Controller {
 		$path = FCPATH.'assets\images\images_user_admin\\';
 		unlink($path.$usersAdminModel->photo_profile);
 		
-		$message = '<strong>Penghapusan Data User Admin berhasil dilakukan !</strong>'.
+		$message = 'alert-success | <strong>Penghapusan Data User Admin berhasil dilakukan !</strong>'.
 			'<br>'.
 			'Data User Admin, <strong>'.$usersAdminModel->name.'</strong> dengan Username <strong>'.$usersAdminModel->email.'</strong> berhasil dihapus !';
 

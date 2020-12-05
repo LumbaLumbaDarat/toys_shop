@@ -104,8 +104,8 @@ class Checkout extends CI_Controller {
             array_push($detailTransactionModelArray, $newDetailTransaction);
         }
 
-        $buttonName;
-        $refNo;
+        $buttonName = '';
+        $refNo = '';
         if($transactionModel->is_payment == 'N' && $transactionModel->is_received == 'N')
         {
             $refNo = 'NO_PAY | '.$transactionModel->ref_no;

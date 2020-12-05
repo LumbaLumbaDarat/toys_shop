@@ -148,6 +148,11 @@ class UtilityModel extends CI_model{
 	{
         return $this->session->userdata('user_data') === null;
 	}
+
+	public function updateSession($id){
+		$usersAdminModel = $this->usersAdminModel->getDataWhere('id', $id);
+		$this->session->set_userdata(['user_data' => $usersAdminModel]);
+	}
 	
 	public function dataHeader($titleName)
 	{

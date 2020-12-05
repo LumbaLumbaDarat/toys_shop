@@ -78,7 +78,7 @@
                                             <li class="last">Pembayaran<span>IDR <?php echo $cartSumString ?></span></li>
                                         </ul>
                                         <div class="button5">
-                                            <form class="form" method="post" action="<?php echo base_url('client/contact') ?>">
+                                            <form class="form" method="post" action="<?php echo base_url('client/contact') ?>" <?php if($button_submit_name == '') echo 'hidden'; ?>>
                                                 <input class="form-control" class='ref_no' name="ref_no" value="<?php echo $ref_no ?>" hidden/>
                                                 <button type="submit" class="btn "><?php echo $button_submit_name ?></button>
                                             </form>
