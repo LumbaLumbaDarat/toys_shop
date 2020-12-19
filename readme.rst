@@ -6,7 +6,7 @@ Toy Shop
 - Create database with name toys_shop 
 - Import Database in folder assets/database_sql, File name toys_shop.sql to your database (toys_shop) was created.
 - Hit the url for Admin in your browser http://localhost/toys_shop/admin/dashboard/ and for Client http://localhost/toys_shop/client/dashboard
-- Use username admin@mail.com and password admin for Login Admin Master before create all Admin.
+- Use username admin@email.com and password admin for Login Admin Master before create all Admin.
 
 ###################
 UI Theme
